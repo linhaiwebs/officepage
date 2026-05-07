@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMAXS | AIが変える、株式学習のかたち。</title>
+<meta name="description" content="AIMAXS（アイマックス）は、AIを活用した次世代の株式教育プラットフォームです。データドリブンなアプローチで、株式市場のしくみを体系的に学べます。">
+<style>
+/* ============================================================
+   AIMAXS — Retro Digital Card-Stacking Landing Page
+   ============================================================ */
+
+/* ---- RESET & BASE ---- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a12;
+  --card-bg:#12121f;
+  --card-border:#1e1e35;
+  --card-bg-alt:#16162a;
+  --green:#00ff66;
+  --green-dim:#00cc52;
+  --green-glow:rgba(0,255,102,.15);
+  --amber:#ffb000;
+  --amber-glow:rgba(255,176,0,.12);
+  --text:#c8ccd6;
+  --text-dim:#8b8b9e;
+  --heading:#e8eaf0;
+  --white:#f0f0f5;
+  --font-mono:"Courier New","MS Gothic","Osaka-Mono",monospace;
+  --font-sans:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --max-w:1120px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:var(--font-sans);
+  color:var(--text);
+  background:var(--bg);
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ---- SCANLINE OVERLAY ---- */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);
+  pointer-events:none;z-index:9999;
+}
+
+/* ---- DOT GRID BG ---- */
+.bg-grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:20px 20px;
+}
+
+/* ---- CONTAINER ---- */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+/* ---- HEADER ---- */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(10,10,18,.88);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  height:64px;
+}
+.header-inner{
+  max-width:var(--max-w);margin:0 auto;padding:0 24px;
+  height:100%;display:flex;align-items:center;justify-content:space-between;
+}
+.site-logo{
+  font-family:var(--font-mono);font-size:1.25rem;font-weight:700;
+  color:var(--green);text-decoration:none;letter-spacing:.06em;
+}
+.site-logo .cursor{display:inline-block;width:10px;height:1.2em;background:var(--green);animation:blink 1s step-end infinite;vertical-align:text-bottom;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.header-nav{display:flex;gap:24px;align-items:center}
+.header-nav a{font-size:.82rem;color:var(--text-dim);text-decoration:none;font-family:var(--font-mono);transition:color .2s;letter-spacing:.04em}
+.header-nav a:hover{color:var(--green)}
+.header-cta{
+  font-family:var(--font-mono);font-size:.78rem;
+  background:transparent;color:var(--green);text-decoration:none;
+  border:1px solid var(--green);padding:7px 18px;
+  transition:all .2s;letter-spacing:.04em;
+}
+.header-cta:hover{background:var(--green-glow);box-shadow:0 0 16px var(--green-glow)}
+.mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.mobile-toggle span{display:block;width:22px;height:2px;background:var(--text);margin:4px 0;transition:.3s}
+
+/* ---- HERO ---- */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;display:flex;align-items:center;
+  padding-top:64px;
+}
+.hero-inner{display:flex;align-items:center;gap:48px}
+.hero-content{flex:1}
+.hero-badge{
+  display:inline-block;font-family:var(--font-mono);font-size:.72rem;
+  color:var(--green);border:1px solid rgba(0,255,102,.25);
+  padding:4px 12px;margin-bottom:20px;letter-spacing:.08em;
+}
+.hero-title{
+  font-family:var(--font-mono);font-size:clamp(1.8rem,4vw,2.8rem);
+  font-weight:700;color:var(--heading);line-height:1.35;margin-bottom:16px;
+  letter-spacing:.02em;
+}
+.hero-title .accent{color:var(--green)}
+.hero-sub{
+  font-size:1.05rem;color:var(--text-dim);max-width:500px;margin-bottom:32px;line-height:1.9;
+}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-mono);font-size:.85rem;font-weight:600;
+  padding:14px 32px;text-decoration:none;
+  transition:all .25s;cursor:pointer;letter-spacing:.04em;
+}
+.btn-primary{
+  background:var(--green);color:#0a0a12;border:none;
+}
+.btn-primary:hover{background:var(--green-dim);transform:translateY(-2px);box-shadow:0 8px 28px var(--green-glow)}
+.btn-outline{
+  background:transparent;color:var(--green);border:1px solid rgba(0,255,102,.35);
+}
+.btn-outline:hover{background:var(--green-glow);transform:translateY(-2px);box-shadow:0 8px 28px var(--green-glow)}
+.hero-note{font-size:.78rem;color:var(--text-dim);margin-top:16px;font-family:var(--font-mono)}
+.hero-visual{flex:1;position:relative;display:flex;align-items:center;justify-content:center}
+.terminal-window{
+  background:#0d0d1a;border:1px solid var(--card-border);
+  border-radius:8px;width:100%;max-width:480px;overflow:hidden;
+  box-shadow:0 0 40px rgba(0,255,102,.06),0 16px 48px rgba(0,0,0,.4);
+}
+.terminal-bar{
+  background:#1a1a2e;padding:8px 14px;display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--card-border);
+}
+.terminal-dot{width:10px;height:10px;border-radius:50%}
+.terminal-dot.r{background:#ff5f57}.terminal-dot.y{background:#febc2e}.terminal-dot.g{background:#28c840}
+.terminal-title{font-family:var(--font-mono);font-size:.68rem;color:var(--text-dim);margin-left:6px}
+.terminal-body{padding:20px;font-family:var(--font-mono);font-size:.78rem;color:var(--green);line-height:1.7}
+.terminal-body .prompt{color:var(--amber)}
+.terminal-body .dim{color:#4a6a5a}
+.terminal-body .hl{color:var(--white)}
+
+/* ---- CARD STACK ---- */
+.card-stack{position:relative;z-index:1;padding-bottom:240px}
+.stack-card{
+  position:sticky;
+  width:92%;max-width:var(--max-w);
+  margin:0 auto;
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:12px;
+  padding:56px 48px;
+  min-height:55vh;
+  box-shadow:0 1px 2px rgba(0,0,0,.3),0 8px 32px rgba(0,0,0,.25);
+  transition:box-shadow .3s;
+}
+.stack-card:hover{box-shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.35)}
+.stack-card:nth-child(1){top:72px;z-index:10}
+.stack-card:nth-child(2){top:88px;z-index:20}
+.stack-card:nth-child(3){top:104px;z-index:30}
+.stack-card:nth-child(4){top:120px;z-index:40}
+.stack-card:nth-child(5){top:136px;z-index:50}
+.stack-card:nth-child(6){top:152px;z-index:60}
+.stack-card:nth-child(7){top:168px;z-index:70}
+.stack-card:last-child{margin-bottom:0}
+
+/* ---- CARD HEADINGS (terminal style) ---- */
+.card-head{
+  font-family:var(--font-mono);font-size:.72rem;color:var(--text-dim);
+  margin-bottom:8px;letter-spacing:.06em;
+}
+.card-head .prompt{color:var(--green)}
+.card-title{
+  font-family:var(--font-mono);font-size:clamp(1.3rem,2.5vw,1.75rem);
+  font-weight:700;color:var(--heading);margin-bottom:8px;letter-spacing:.02em;
+}
+.card-subtitle{font-size:.92rem;color:var(--text-dim);max-width:560px;margin-bottom:40px;line-height:1.7}
+.divider-line{height:1px;background:var(--card-border);margin:24px 0;border:none}
+
+/* ---- CARD 1: ABOUT ---- */
+.about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.about-item{
+  background:var(--card-bg-alt);border:1px solid var(--card-border);
+  padding:28px 24px;text-align:center;
+  transition:border-color .3s,box-shadow .3s;
+}
+.about-item:hover{border-color:rgba(0,255,102,.2);box-shadow:0 0 24px var(--green-glow)}
+.about-icon{font-size:2rem;margin-bottom:12px}
+.about-item h4{font-family:var(--font-mono);font-size:.9rem;color:var(--heading);margin-bottom:8px;letter-spacing:.02em}
+.about-item p{font-size:.82rem;color:var(--text-dim);line-height:1.7}
+
+/* ---- CARD 2: PROGRAMS ---- */
+.programs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.program-card{
+  background:var(--card-bg-alt);border:1px solid var(--card-border);
+  padding:24px 20px;transition:all .3s;position:relative;overflow:hidden;
+}
+.program-card::before{
+  content:'';position:absolute;top:0;left:0;width:100%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.program-card:hover::before{opacity:1}
+.program-card:hover{border-color:rgba(0,255,102,.2);box-shadow:0 0 24px var(--green-glow)}
+.program-card .prog-icon{font-size:1.5rem;margin-bottom:12px}
+.program-card h4{font-family:var(--font-mono);font-size:.85rem;color:var(--heading);margin-bottom:6px;letter-spacing:.02em}
+.program-card p{font-size:.78rem;color:var(--text-dim);line-height:1.6}
+.program-card .level{
+  display:inline-block;font-family:var(--font-mono);font-size:.65rem;
+  margin-top:10px;padding:2px 10px;
+  border:1px solid var(--card-border);color:var(--text-dim);
+}
+.program-card .level.beginner{border-color:rgba(0,255,102,.3);color:var(--green)}
+
+/* ---- CARD 3: AI SYSTEM ---- */
+.system-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.system-step{text-align:center;padding:28px 16px;position:relative}
+.system-step:not(:last-child)::after{
+  content:'▸';position:absolute;right:-16px;top:50%;transform:translateY(-50%);
+  font-size:1.2rem;color:var(--green);font-family:var(--font-mono);
+}
+.step-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:48px;height:48px;border-radius:50%;
+  border:2px solid var(--green);color:var(--green);
+  font-family:var(--font-mono);font-size:1rem;font-weight:700;
+  margin-bottom:14px;transition:all .3s;
+}
+.system-step:hover .step-num{background:var(--green-glow);box-shadow:0 0 20px var(--green-glow)}
+.system-step h4{font-family:var(--font-mono);font-size:.85rem;color:var(--heading);margin-bottom:6px;letter-spacing:.02em}
+.system-step p{font-size:.78rem;color:var(--text-dim);line-height:1.6}
+.system-code{
+  background:#0d0d1a;border:1px solid var(--card-border);
+  padding:20px 24px;margin-top:32px;
+  font-family:var(--font-mono);font-size:.74rem;color:#4a6a5a;line-height:1.7;
+  overflow-x:auto;
+}
+.system-code .kw{color:var(--green)}.system-code .str{color:var(--amber)}.system-code .cmt{color:var(--text-dim)}
+
+/* ---- CARD 4: LEARNING PATH ---- */
+.path-steps{display:flex;flex-direction:column;gap:0;position:relative;padding-left:32px}
+.path-steps::before{
+  content:'';position:absolute;left:11px;top:8px;bottom:8px;
+  width:2px;background:var(--card-border);
+}
+.path-step{
+  position:relative;padding:16px 0 16px 28px;
+}
+.path-step::before{
+  content:'';position:absolute;left:-25px;top:22px;
+  width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--green);background:var(--card-bg);
+  transition:all .3s;z-index:2;
+}
+.path-step.completed::before{background:var(--green);box-shadow:0 0 12px var(--green-glow)}
+.path-step:last-child{padding-bottom:0}
+.path-step .stage-label{font-family:var(--font-mono);font-size:.68rem;color:var(--green);letter-spacing:.06em;margin-bottom:2px}
+.path-step h4{font-family:var(--font-mono);font-size:.92rem;color:var(--heading);margin-bottom:4px;letter-spacing:.02em}
+.path-step p{font-size:.82rem;color:var(--text-dim);line-height:1.6}
+
+/* ---- CARD 5: TESTIMONIALS ---- */
+.voices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.voice-card{
+  background:var(--card-bg-alt);border:1px solid var(--card-border);
+  padding:28px 24px;transition:all .3s;
+}
+.voice-card:hover{border-color:rgba(255,176,0,.2);box-shadow:0 0 24px var(--amber-glow)}
+.voice-stars{color:var(--amber);font-size:.85rem;margin-bottom:12px;letter-spacing:2px}
+.voice-quote{font-size:.82rem;color:var(--text-dim);line-height:1.7;margin-bottom:16px;font-style:italic}
+.voice-author{display:flex;align-items:center;gap:10px}
+.voice-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green-dim),#009940);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.7rem;color:#0a0a12;font-weight:700;
+}
+.voice-meta .name{font-size:.82rem;color:var(--heading);font-weight:600}
+.voice-meta .role{font-size:.7rem;color:var(--text-dim);font-family:var(--font-mono)}
+
+/* ---- CARD 6: FAQ ---- */
+.faq-list{display:flex;flex-direction:column;gap:4px}
+.faq-item{border:1px solid var(--card-border);transition:all .3s}
+.faq-item:hover{border-color:rgba(0,255,102,.15)}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 20px;cursor:pointer;user-select:none;
+  font-family:var(--font-mono);font-size:.85rem;color:var(--heading);
+  letter-spacing:.02em;transition:color .2s;
+}
+.faq-q:hover{color:var(--green)}
+.faq-q .faq-icon{
+  font-family:var(--font-mono);font-size:1.1rem;color:var(--green);
+  transition:transform .3s;flex-shrink:0;margin-left:16px;
+}
+.faq-q.open .faq-icon{transform:rotate(45deg)}
+.faq-a{
+  display:none;padding:0 20px 18px;
+  font-size:.82rem;color:var(--text-dim);line-height:1.8;
+}
+.faq-a.open{display:block}
+
+/* ---- CARD 7: PRICING ---- */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pricing-card{
+  background:var(--card-bg-alt);border:1px solid var(--card-border);
+  padding:32px 28px;text-align:center;transition:all .3s;position:relative;
+}
+.pricing-card:hover{border-color:rgba(0,255,102,.2);box-shadow:0 0 28px var(--green-glow);transform:translateY(-4px)}
+.pricing-card.featured{border-color:var(--green);box-shadow:0 0 20px var(--green-glow)}
+.pricing-card .plan-name{font-family:var(--font-mono);font-size:.9rem;color:var(--heading);margin-bottom:12px;letter-spacing:.04em}
+.pricing-card .plan-price{font-family:var(--font-mono);font-size:2rem;font-weight:700;color:var(--white);margin-bottom:4px}
+.pricing-card .plan-price span{font-size:.85rem;color:var(--text-dim);font-weight:400}
+.pricing-card .plan-desc{font-size:.8rem;color:var(--text-dim);margin-bottom:20px;line-height:1.6}
+.pricing-card .plan-features{list-style:none;text-align:left;margin-bottom:24px}
+.pricing-card .plan-features li{
+  font-size:.78rem;color:var(--text-dim);padding:5px 0;
+  display:flex;align-items:center;gap:8px;
+}
+.pricing-card .plan-features li::before{content:'✓';color:var(--green);font-family:var(--font-mono);font-size:.75rem;flex-shrink:0}
+.pricing-card .btn{width:100%;justify-content:center}
+.pricing-card .btn-outline-sm{
+  font-size:.78rem;padding:11px 20px;width:100%;justify-content:center;
+  background:transparent;color:var(--green);border:1px solid rgba(0,255,102,.35);
+  font-family:var(--font-mono);cursor:pointer;transition:all .25s;letter-spacing:.04em;
+}
+.pricing-card .btn-outline-sm:hover{background:var(--green-glow);box-shadow:0 0 16px var(--green-glow)}
+.pricing-card.featured .btn-outline-sm{background:var(--green);color:#0a0a12;border-color:var(--green)}
+.pricing-card.featured .btn-outline-sm:hover{background:var(--green-dim)}
+.pricing-badge{
+  display:inline-block;font-family:var(--font-mono);font-size:.65rem;
+  background:var(--green);color:#0a0a12;padding:3px 10px;
+  position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  letter-spacing:.06em;white-space:nowrap;
+}
+
+/* ---- CTA BANNER ---- */
+.cta-banner{
+  position:relative;z-index:1;text-align:center;
+  padding:80px 24px;margin-top:40px;
+}
+.cta-banner h2{
+  font-family:var(--font-mono);font-size:clamp(1.3rem,2.5vw,1.75rem);
+  color:var(--heading);margin-bottom:12px;letter-spacing:.02em;
+}
+.cta-banner p{font-size:.92rem;color:var(--text-dim);max-width:500px;margin:0 auto 28px;line-height:1.7}
+
+/* ---- FOOTER ---- */
+.site-footer{
+  position:relative;z-index:1;
+  background:var(--card-bg);border-top:1px solid var(--card-border);
+  padding:56px 0 28px;
+}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:40px;margin-bottom:40px}
+.footer-brand .site-logo{font-family:var(--font-mono);font-size:1.15rem;color:var(--green);font-weight:700;letter-spacing:.06em;margin-bottom:10px;display:block}
+.footer-brand p{font-size:.78rem;color:var(--text-dim);line-height:1.7;max-width:280px}
+.footer-col h5{font-family:var(--font-mono);font-size:.78rem;color:var(--heading);margin-bottom:14px;letter-spacing:.04em}
+.footer-col ul{list-style:none}
+.footer-col ul li{padding:4px 0}
+.footer-col ul li a{font-size:.76rem;color:var(--text-dim);text-decoration:none;transition:color .2s}
+.footer-col ul li a:hover{color:var(--green)}
+.footer-bottom{
+  border-top:1px solid var(--card-border);padding-top:20px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);
+}
+.footer-disclaimer{font-size:.68rem;color:var(--text-dim);line-height:1.6;max-width:700px;margin-top:12px}
+
+/* ---- PAGE TOP ---- */
+.page-top{
+  position:fixed;bottom:28px;right:28px;z-index:90;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--card-bg);border:1px solid var(--card-border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .3s;opacity:0;pointer-events:none;
+  font-family:var(--font-mono);color:var(--green);font-size:1.1rem;
+}
+.page-top.visible{opacity:1;pointer-events:auto}
+.page-top:hover{background:var(--green-glow);border-color:var(--green);box-shadow:0 0 16px var(--green-glow)}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:1024px){
+  .about-grid{grid-template-columns:repeat(2,1fr)}
+  .programs-grid{grid-template-columns:repeat(2,1fr)}
+  .system-steps{grid-template-columns:repeat(2,1fr)}
+  .system-step:nth-child(2)::after{display:none}
+  .pricing-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}
+  .voices-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}
+}
+@media(max-width:768px){
+  .hero-inner{flex-direction:column;gap:32px}
+  .hero-content{padding-top:40px;text-align:center}
+  .hero-sub{margin:0 auto 24px}
+  .hero-ctas{justify-content:center}
+  .terminal-window{max-width:100%}
+  .header-nav{display:none}
+  .header-nav.open{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--card-bg);border-bottom:1px solid var(--card-border);padding:20px;gap:16px;z-index:99}
+  .mobile-toggle{display:block}
+  .stack-card{position:relative;top:auto!important;z-index:auto!important;width:96%;min-height:auto;padding:32px 20px;margin-bottom:20px}
+  .card-stack{padding-bottom:40px}
+  .about-grid{grid-template-columns:1fr}
+  .programs-grid{grid-template-columns:1fr}
+  .system-steps{grid-template-columns:1fr}
+  .system-step::after{display:none!important}
+  .voices-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .path-steps{padding-left:24px}
+  .path-step{padding-left:20px}
+  .path-step::before{left:-19px}
+}
+@media(max-width:480px){
+  .footer-grid{grid-template-columns:1fr}
+  .pricing-grid{max-width:100%}
+  .hero-title{font-size:1.5rem}
+  .stack-card{padding:24px 16px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="site-logo">&gt; AIMAXS<span class="cursor"></span></a>
+    <nav class="header-nav" id="headerNav">
+      <a href="#about">/about</a>
+      <a href="#programs">/programs</a>
+      <a href="#system">/system</a>
+      <a href="#path">/path</a>
+      <a href="#faq">/faq</a>
+      <a href="#pricing" class="header-cta">無料で始める</a>
+    </nav>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">[ v2.0.1 ] — 株式教育プラットフォーム</div>
+        <h1 class="hero-title">AIが変える、<br><span class="accent">株式学習</span>のかたち。</h1>
+        <p class="hero-sub">データドリブンなアプローチで、株式市場のしくみを体系的に学ぶ。<br>AIMAXSは、中立的な立場から<strong>株式教育</strong>を提供するプラットフォームです。</p>
+        <div class="hero-ctas">
+          <a href="#" class="btn btn-primary" data-subscribe>&gt; 無料で学習を始める</a>
+          <a href="#programs" class="btn btn-outline">&gt; プログラムを見る</a>
+        </div>
+        <p class="hero-note">※ 登録は無料です。クレジットカードは不要です。</p>
+      </div>
+      <div class="hero-visual">
+        <div class="terminal-window">
+          <div class="terminal-bar">
+            <span class="terminal-dot r"></span><span class="terminal-dot y"></span><span class="terminal-dot g"></span>
+            <span class="terminal-title">aimaxs.session</span>
+          </div>
+          <div class="terminal-body">
+            <span class="dim"># AIMAXS AI Engine v2.0.1</span><br>
+            <span class="dim"># 株式市場データを解析中...</span><br><br>
+            <span class="prompt">$</span> <span class="hl">analyze --market-overview</span><br>
+            <span class="dim">日経平均 38,200.50</span><br>
+            <span class="dim">TOPIX 2,756.30</span><br>
+            <span class="dim">出来高 1.42B</span><br><br>
+            <span class="prompt">$</span> <span class="hl">learn --module basics</span><br>
+            <span class="dim">>> 基礎講座モジュールをロード中...</span><br>
+            <span class="dim">>> 完了。5レッスンが利用可能です。</span><br><br>
+            <span class="prompt">$</span> <span class="cursor-inline">█</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARD STACK -->
+<div class="card-stack">
+
+  <!-- Card 1: About -->
+  <section class="stack-card" id="about">
+    <div class="card-head"><span class="prompt">&gt;</span> ABOUT_AIMAXS.md</div>
+    <h2 class="card-title"> AIMAXS とは</h2>
+    <p class="card-subtitle">AIMAXSは、AI技術を活用した<strong>株式教育</strong>に特化した学習プラットフォームです。投資判断のアドバイスではなく、市場のしくみを理解するための「知識」と「分析スキル」の習得をサポートします。</p>
+    <div class="divider-line"></div>
+    <div class="about-grid">
+      <div class="about-item">
+        <div class="about-icon">🧠</div>
+        <h4>AIによる個別最適化</h4>
+        <p>学習者の理解度に応じて、AIがカリキュラムを動的に調整。無駄なく効率的な学習体験を提供します。</p>
+      </div>
+      <div class="about-item">
+        <div class="about-icon">📊</div>
+        <h4>データドリブン教材</h4>
+        <p>実際の市場データに基づいた中立的な教材で、バイアスのない知識習得を実現します。</p>
+      </div>
+      <div class="about-item">
+        <div class="about-icon">📋</div>
+        <h4>体系的なカリキュラム</h4>
+        <p>基礎から応用まで、段階的に学習を進められるカリキュラム設計。初心者でも安心して始められます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card 2: Programs -->
+  <section class="stack-card" id="programs">
+    <div class="card-head"><span class="prompt">&gt;</span> PROGRAMS/</div>
+    <h2 class="card-title">学習プログラム</h2>
+    <p class="card-subtitle">株式市場の基礎から専門的な分析手法まで。目的やレベルに合わせて選べる6つのプログラム。</p>
+    <div class="divider-line"></div>
+    <div class="programs-grid">
+      <div class="program-card">
+        <div class="prog-icon">📖</div>
+        <h4>株式基礎講座</h4>
+        <p>株式市場の基本用語や取引の仕組みをゼロから学ぶ入門コース。</p>
+        <span class="level beginner">BEGINNER</span>
+      </div>
+      <div class="program-card">
+        <div class="prog-icon">📈</div>
+        <h4>テクニカル分析入門</h4>
+        <p>チャートパターンや指標の読み方を体系的に理解するコース。</p>
+        <span class="level">INTERMEDIATE</span>
+      </div>
+      <div class="program-card">
+        <div class="prog-icon">🏢</div>
+        <h4>ファンダメンタル分析</h4>
+        <p>企業の財務諸表や業績指標の分析方法を学ぶコース。</p>
+        <span class="level">INTERMEDIATE</span>
+      </div>
+      <div class="program-card">
+        <div class="prog-icon">🤖</div>
+        <h4>AI活用分析講座</h4>
+        <p>AIツールを使ったデータ分析手法とその活用法を学ぶコース。</p>
+        <span class="level">ADVANCED</span>
+      </div>
+      <div class="program-card">
+        <div class="prog-icon">🛡️</div>
+        <h4>リスク管理の考え方</h4>
+        <p>市場リスクの種類とその管理手法について学ぶコース。</p>
+        <span class="level">INTERMEDIATE</span>
+      </div>
+      <div class="program-card">
+        <div class="prog-icon">🧩</div>
+        <h4>マーケット心理と行動経済学</h4>
+        <p>市場参加者の心理や行動バイアスを理解し、客観的な分析力を養うコース。</p>
+        <span class="level">ADVANCED</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card 3: AI System -->
+  <section class="stack-card" id="system">
+    <div class="card-head"><span class="prompt">&gt;</span> SYSTEM.CONFIG</div>
+    <h2 class="card-title">AI学習システム</h2>
+    <p class="card-subtitle">AIMAXSのAIエンジンが、あなたの学習をパーソナライズ。4つのステップで効率的な知識習得を実現します。</p>
+    <div class="divider-line"></div>
+    <div class="system-steps">
+      <div class="system-step">
+        <div class="step-num">01</div>
+        <h4>現状診断</h4>
+        <p>AIが現在の知識レベルと学習目標を分析し、最適なスタート地点を特定します。</p>
+      </div>
+      <div class="system-step">
+        <div class="step-num">02</div>
+        <h4>経路最適化</h4>
+        <p>診断結果に基づき、AIが個人に最適化された学習パスを自動生成します。</p>
+      </div>
+      <div class="system-step">
+        <div class="step-num">03</div>
+        <h4>対話型学習</h4>
+        <p>インタラクティブな教材とAIフィードバックで、理解を深めながら進めます。</p>
+      </div>
+      <div class="system-step">
+        <div class="step-num">04</div>
+        <h4>定着確認</h4>
+        <p>間隔反復と理解度チェックで、学んだ内容を確実に定着させます。</p>
+      </div>
+    </div>
+    <div class="system-code">
+      <span class="cmt">// AIMAXS AI Engine — Learning Path Generator</span><br>
+      <span class="kw">const</span> learner = <span class="kw">await</span> ai.<span class="str">diagnose</span>(userProfile);<br>
+      <span class="kw">const</span> path = ai.<span class="str">generatePath</span>(learner, {<br>
+      &nbsp;&nbsp;modules: [<span class="str">'basics'</span>, <span class="str">'technical'</span>, <span class="str">'fundamental'</span>],<br>
+      &nbsp;&nbsp;adaptive: <span class="kw">true</span>,<br>
+      &nbsp;&nbsp;reviewInterval: <span class="str">'spaced_repetition'</span><br>
+      });<br>
+      <span class="cmt">// パーソナライズされた学習経路を生成しました</span><br>
+      <span class="kw">return</span> path.<span class="str">start</span>();
+    </div>
+  </section>
+
+  <!-- Card 4: Learning Path -->
+  <section class="stack-card" id="path">
+    <div class="card-head"><span class="prompt">&gt;</span> CURRICULUM.PATH</div>
+    <h2 class="card-title">学習の流れ</h2>
+    <p class="card-subtitle">AIMAXSの標準カリキュラムは5つのステージで構成されています。各ステージで着実にスキルを積み上げます。</p>
+    <div class="divider-line"></div>
+    <div class="path-steps">
+      <div class="path-step completed">
+        <div class="stage-label">STAGE 01</div>
+        <h4>基礎知識の習得</h4>
+        <p>株式市場の基本構造、取引の仕組み、主要な市場指標について学びます。専門用語や基本概念をAIがわかりやすく解説します。</p>
+      </div>
+      <div class="path-step completed">
+        <div class="stage-label">STAGE 02</div>
+        <h4>分析手法の理解</h4>
+        <p>テクニカル分析とファンダメンタル分析の基本を学びます。実際のチャートや財務データを使った実践的な演習を通じて理解を深めます。</p>
+      </div>
+      <div class="path-step">
+        <div class="stage-label">STAGE 03</div>
+        <h4>実践的ケーススタディ</h4>
+        <p>過去の市場データを用いたケーススタディで、分析手法の適用方法を学びます。理論と実践の橋渡しを行います。</p>
+      </div>
+      <div class="path-step">
+        <div class="stage-label">STAGE 04</div>
+        <h4>AIツールの活用法</h4>
+        <p>AIを活用したデータ分析の手法を学びます。機械学習モデルを使った市場分析の基礎と実践的な活用方法を習得します。</p>
+      </div>
+      <div class="path-step">
+        <div class="stage-label">STAGE 05</div>
+        <h4>自主的分析の実践</h4>
+        <p>これまでに学んだ知識とスキルを統合し、自律的に市場分析を行えるレベルを目指します。修了テストで理解度を確認します。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card 5: Testimonials -->
+  <section class="stack-card" id="voices">
+    <div class="card-head"><span class="prompt">&gt;</span> VOICES.LOG</div>
+    <h2 class="card-title">受講者の声</h2>
+    <p class="card-subtitle">AIMAXSで学んだ方々の体験談です。学習成果に関する実際のフィードバックをご紹介します。</p>
+    <div class="divider-line"></div>
+    <div class="voices-grid">
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-quote">「株式のことを何も知らない状態から始めましたが、基礎講座がとてもわかりやすく、今ではチャートを見て自分で分析できるようになりました。」</p>
+        <div class="voice-author">
+          <div class="voice-avatar">TK</div>
+          <div class="voice-meta">
+            <div class="name">田中 健太</div>
+            <div class="role">30代 · 会社員</div>
+          </div>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-quote">「AIが自分の弱点を分析して、それに合わせた教材を提案してくれるので、効率的に学習を進められました。体系的に学べるのが良いですね。」</p>
+        <div class="voice-author">
+          <div class="voice-avatar">YS</div>
+          <div class="voice-meta">
+            <div class="name">山本 智子</div>
+            <div class="role">20代 · 大学生</div>
+          </div>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-quote">「教育に特化したプラットフォームなので、中立的な立場から学べるのが安心でした。データに基づいた教材の質が高いと感じます。」</p>
+        <div class="voice-author">
+          <div class="voice-avatar">SN</div>
+          <div class="voice-meta">
+            <div class="name">佐藤 直樹</div>
+            <div class="role">40代 · 自営業</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card 6: FAQ -->
+  <section class="stack-card" id="faq">
+    <div class="card-head"><span class="prompt">&gt;</span> FAQ/</div>
+    <h2 class="card-title">よくある質問</h2>
+    <p class="card-subtitle">AIMAXSのご利用に関するよくあるご質問をまとめました。</p>
+    <div class="divider-line"></div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><span>まったくの初心者でも大丈夫ですか？</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">はい、問題ありません。AIMAXSの基礎講座は、株式市場についての予備知識がゼロの方でも理解できるように設計されています。専門用語はAIがその場で解説し、段階的に学習を進められます。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>投資のアドバイスはもらえますか？</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">AIMAXSは<strong>教育プラットフォーム</strong>であり、特定の銘柄や投資判断を推奨するものではありません。当プラットフォームの目的は、株式市場のしくみを理解し、ご自身で分析・判断するための知識とスキルを習得していただくことです。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>どのくらいの期間で学べますか？</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">基礎講座は約2〜3週間で完了できるボリュームです。より専門的なプログラムを含めた全カリキュラムは約3〜4ヶ月を想定していますが、学習ペースは個人の都合に合わせて調整できます。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>AIはどのように学習をサポートしますか？</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">AIは学習者の理解度をリアルタイムで分析し、最適な教材と学習順序を提案します。また、質問に対してその場で解説を生成する機能や、間隔反復による復習タイミングの最適化も行います。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>無料プランと有料プランの違いは？</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">無料プランでは基礎講座と一部の入門コンテンツにアクセスできます。有料プランでは、より高度な分析講座、AIによる個別最適化、実践的なケーススタディなどの追加機能がご利用いただけます。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>スマートフォンでも学習できますか？</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">はい、AIMAXSはすべてのデバイスに対応しています。スマートフォン、タブレット、PCのいずれでも快適に学習いただけます。学習進捗はデバイス間で自動的に同期されます。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card 7: Pricing -->
+  <section class="stack-card" id="pricing">
+    <div class="card-head"><span class="prompt">&gt;</span> PLANS.PRICING</div>
+    <h2 class="card-title">利用プラン</h2>
+    <p class="card-subtitle">学習目的やレベルに合わせて選べる3つのプランをご用意しています。</p>
+    <div class="divider-line"></div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">FREE</div>
+        <div class="plan-price">¥0<span>/月</span></div>
+        <p class="plan-desc">まずは無料で<br>株式学習を体験</p>
+        <ul class="plan-features">
+          <li>基礎講座（全5レッスン）</li>
+          <li>基本的な用語解説</li>
+          <li>一部の学習コンテンツ</li>
+          <li>コミュニティアクセス</li>
+        </ul>
+        <a href="#" class="btn-outline-sm" data-subscribe>無料で始める</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">RECOMMENDED</div>
+        <div class="plan-name">STANDARD</div>
+        <div class="plan-price">¥2,980<span>/月</span></div>
+        <p class="plan-desc">体系的に学びたい<br>方におすすめ</p>
+        <ul class="plan-features">
+          <li>すべての基礎・応用講座</li>
+          <li>AI個別最適化学習パス</li>
+          <li>実践的ケーススタディ</li>
+          <li>理解度テストと修了証明</li>
+          <li>優先サポート</li>
+        </ul>
+        <a href="#" class="btn-outline-sm" data-subscribe>7日間無料トライアル</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">PREMIUM</div>
+        <div class="plan-price">¥5,980<span>/月</span></div>
+        <p class="plan-desc">専門的な分析スキル<br>を習得したい方に</p>
+        <ul class="plan-features">
+          <li>Standardの全機能</li>
+          <li>AI分析ツール全機能</li>
+          <li>1on1学習コーチング</li>
+          <li>限定ウェビナー参加</li>
+          <li>先行コンテンツアクセス</li>
+        </ul>
+        <a href="#" class="btn-outline-sm" data-subscribe>プランを申し込む</a>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /card-stack -->
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="container">
+    <h2>&gt; まずは無料で始めてみませんか？</h2>
+    <p>登録は30秒で完了します。クレジットカードは不要です。<br>まずは基礎講座を無料で体験してください。</p>
+    <a href="#" class="btn btn-primary" data-subscribe>&gt; 無料会員登録する</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="site-logo">&gt; AIMAXS</span>
+        <p>AIを活用した次世代の株式教育プラットフォーム。中立的な立場から、株式市場のしくみを体系的に学ぶ場を提供しています。</p>
+      </div>
+      <div class="footer-col">
+        <h5>/programs</h5>
+        <ul>
+          <li><a href="#">基礎講座</a></li>
+          <li><a href="#">テクニカル分析</a></li>
+          <li><a href="#">ファンダメンタル分析</a></li>
+          <li><a href="#">AI分析講座</a></li>
+          <li><a href="#">リスク管理</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>/support</h5>
+        <ul>
+          <li><a href="#">よくある質問</a></li>
+          <li><a href="#">お問い合わせ</a></li>
+          <li><a href="#">利用規約</a></li>
+          <li><a href="#">プライバシーポリシー</a></li>
+          <li><a href="#">特定商取引法に基づく表記</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>/resources</h5>
+        <ul>
+          <li><a href="#">株式用語集</a></li>
+          <li><a href="#">マーケットレポート</a></li>
+          <li><a href="#">学習ブログ</a></li>
+          <li><a href="#">コミュニティ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 AIMAXS. All rights reserved.</span>
+      <span>aimaxs.vip</span>
+    </div>
+    <p class="footer-disclaimer">AIMAXSは教育を目的としたプラットフォームです。特定の投資判断や銘柄の推奨を行うものではなく、将来の成果を保証するものではありません。すべての学習コンテンツは情報提供および教育目的でのみ提供されています。</p>
+  </div>
+</footer>
+
+<!-- PAGE TOP -->
+<div class="page-top" id="pageTop">↑</div>
+
+<!-- Analytics & Scripts -->
+<script src="js/config.js"></script>
+<script src="js/analytics.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---- gtag.js dynamic loader ---- */
+  var cfg = window.AppConfig;
+  if (cfg && cfg.gtag && cfg.gtag.src && cfg.gtag.measurementId) {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = cfg.gtag.src + '?id=' + cfg.gtag.measurementId;
+    document.head.appendChild(s);
+  }
+
+  /* ---- subscribe CTA ---- */
+  var subscribeUrl = (cfg && cfg.subscribeUrl) || 'subscribe.html';
+  document.querySelectorAll('[data-subscribe]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.getElementById('headerNav').classList.remove('open');
+      if (window.Analytics && window.Analytics.trackConversion) {
+        Analytics.trackConversion(subscribeUrl);
+      } else {
+        window.location = subscribeUrl;
+      }
+    });
+  });
+
+  /* ---- mobile nav toggle ---- */
+  document.getElementById('mobileToggle').addEventListener('click', function () {
+    document.getElementById('headerNav').classList.toggle('open');
+  });
+
+  /* ---- FAQ accordion ---- */
+  document.querySelectorAll('.faq-q').forEach(function (el) {
+    el.addEventListener('click', function () {
+      this.classList.toggle('open');
+      this.nextElementSibling.classList.toggle('open');
+    });
+  });
+
+  /* ---- page top button ---- */
+  window.addEventListener('scroll', function () {
+    var btn = document.getElementById('pageTop');
+    if (window.scrollY > 500) { btn.classList.add('visible'); }
+    else { btn.classList.remove('visible'); }
+  });
+  document.getElementById('pageTop').addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---- smooth scroll (skip subscribe buttons) ---- */
+  document.querySelectorAll('a[href^="#"]:not([data-subscribe])').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      document.getElementById('headerNav').classList.remove('open');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
