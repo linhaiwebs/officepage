@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アイダケ | AI株式教育プラットフォーム</title>
+<meta name="description" content="アイダケ（Aidake）は、AIを活用した次世代の株式教育プラットフォームです。初心者から経験者まで、データドリブンな学習体験を提供します。">
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c-bg:#faf8f5;
+  --c-white:#fff;
+  --c-black:#1a1a1e;
+  --c-gray-50:#f7f7f8;
+  --c-gray-100:#eeeef0;
+  --c-gray-200:#dddde0;
+  --c-gray-300:#b0b0b8;
+  --c-gray-400:#80808a;
+  --c-gray-500:#5c5c66;
+  --c-gray-600:#3d3d46;
+  --c-accent:#2563eb;
+  --c-accent-light:#3b82f6;
+  --c-accent-dark:#1d4ed8;
+  --c-green:#16a34a;
+  --c-green-bg:#f0fdf4;
+  --c-red:#dc2626;
+  --c-red-bg:#fef2f2;
+  --c-orange:#ea580c;
+  --c-gold:#f59e0b;
+  --c-purple:#7c3aed;
+  --font-sans:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --font-serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --max-w:1200px;
+  --section-gap:80px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);color:var(--c-black);background:var(--c-bg);line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ===== TYPOGRAPHY ===== */
+.serif{font-family:var(--font-serif)}
+.text-accent{color:var(--c-accent)}
+.text-green{color:var(--c-green)}
+.text-red{color:var(--c-red)}
+.text-gray{color:var(--c-gray-400)}
+.text-sm{font-size:0.875rem}
+.text-xs{font-size:0.75rem}
+.font-bold{font-weight:700}
+.font-medium{font-weight:500}
+
+/* ===== CONTAINER ===== */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.container-wide{max-width:1320px;margin:0 auto;padding:0 24px}
+
+/* ===== SECTION ===== */
+.section{padding:var(--section-gap) 0;position:relative}
+.section-title{
+  font-family:var(--font-serif);
+  font-size:2rem;
+  font-weight:700;
+  line-height:1.4;
+  margin-bottom:8px;
+}
+.section-subtitle{
+  font-size:0.95rem;
+  color:var(--c-gray-500);
+  margin-bottom:48px;
+  max-width:640px;
+}
+.section-label{
+  display:inline-block;
+  font-size:0.75rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--c-accent);
+  margin-bottom:12px;
+  border-left:3px solid var(--c-accent);
+  padding-left:10px;
+}
+
+/* ===== DIVIDER ===== */
+.divider{height:1px;background:var(--c-gray-200);margin:0;border:none}
+.divider-dashed{height:0;border:none;border-top:1px dashed var(--c-gray-300);margin:32px 0}
+
+/* ===== NAV ===== */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,245,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--c-gray-200);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:var(--max-w);margin:0 auto;padding:0 24px;height:64px;
+}
+.site-logo{
+  font-family:var(--font-serif);
+  font-size:1.35rem;font-weight:700;
+  text-decoration:none;color:var(--c-black);
+  letter-spacing:.04em;
+}
+.site-logo span{color:var(--c-accent)}
+.header-nav{display:flex;gap:28px;align-items:center}
+.header-nav a{
+  font-size:0.85rem;text-decoration:none;color:var(--c-gray-500);
+  font-weight:500;transition:color .2s;
+}
+.header-nav a:hover{color:var(--c-black)}
+.header-cta{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--c-accent);color:#fff !important;
+  padding:8px 20px;border-radius:6px;font-size:0.8rem !important;
+  transition:background .2s;
+}
+.header-cta:hover{background:var(--c-accent-dark) !important}
+.mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.mobile-toggle span{display:block;width:22px;height:2px;background:var(--c-black);margin:5px 0;border-radius:2px;transition:.3s}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:calc(100vh - 64px);
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  background-image:radial-gradient(var(--c-gray-200) 1px,transparent 1px);
+  background-size:24px 24px;
+}
+.hero-inner{display:flex;align-items:center;width:100%;gap:0;position:relative;z-index:2}
+.hero-content{width:55%;padding:80px 0 80px 24px;flex-shrink:0}
+.hero-visual{width:45%;flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center;padding:40px 0}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--c-accent);color:#fff;
+  font-size:0.75rem;font-weight:600;padding:6px 14px;border-radius:4px;
+  margin-bottom:20px;letter-spacing:.04em;
+}
+.hero-title{
+  font-family:var(--font-serif);
+  font-size:clamp(2rem,4vw,3.25rem);
+  font-weight:700;
+  line-height:1.25;
+  margin-bottom:16px;
+  max-width:620px;
+}
+.hero-title em{
+  font-style:normal;
+  background:linear-gradient(180deg,transparent 60%,rgba(37,99,235,.18) 60%);
+}
+.hero-sub{
+  font-size:1.05rem;
+  color:var(--c-gray-500);
+  line-height:1.8;
+  max-width:500px;
+  margin-bottom:32px;
+}
+.hero-ctas{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.hero-ctas .btn{min-width:260px}
+.hero-note{
+  font-size:0.8rem;
+  color:var(--c-gray-400);
+  margin-top:16px;
+}
+.hero-visual-inner{
+  position:relative;
+  transform:rotate(3deg);
+  box-shadow:0 20px 60px -8px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.06);
+  border-radius:12px;
+  overflow:hidden;
+  width:92%;max-width:520px;
+  background:var(--c-white);
+}
+.hero-visual-inner::before{
+  content:'';display:block;padding-top:66%;
+  background:linear-gradient(135deg,#e8edf5 0%,#d6e0f0 40%,#c5d4eb 100%);
+}
+.hero-visual-content{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:10%;
+}
+.hero-visual-content .mock-chart{width:100%;height:60%;background:rgba(255,255,255,.6);border-radius:8px;margin-bottom:8%;display:flex;align-items:flex-end;padding:8%;gap:4%}
+.hero-visual-content .mock-chart .bar{flex:1;background:var(--c-accent);border-radius:3px 3px 0 0;opacity:.7;height:var(--h,40%)}
+.hero-visual-content .mock-chart .bar:nth-child(1){--h:55%}
+.hero-visual-content .mock-chart .bar:nth-child(2){--h:70%}
+.hero-visual-content .mock-chart .bar:nth-child(3){--h:45%}
+.hero-visual-content .mock-chart .bar:nth-child(4){--h:85%}
+.hero-visual-content .mock-chart .bar:nth-child(5){--h:60%}
+.hero-visual-content .mock-chart .bar:nth-child(6){--h:75%}
+.hero-visual-content .mock-chart .bar:nth-child(7){--h:50%}
+.hero-visual-content .mock-label{font-size:.65rem;color:var(--c-gray-400);display:flex;width:100%;justify-content:space-between;padding:0 4%}
+.hero-visual-content .mock-label span{background:rgba(255,255,255,.7);padding:2px 6px;border-radius:3px;font-size:.55rem}
+/* hero stat bubbles */
+.hero-stat-bubble{
+  position:absolute;
+  background:var(--c-white);
+  border-radius:8px;
+  padding:10px 14px;
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+  font-size:.7rem;
+  font-weight:600;
+  white-space:nowrap;
+}
+.hero-stat-bubble.top-right{top:6%;right:-8%}
+.hero-stat-bubble.bottom-left{bottom:10%;left:-10%}
+
+/* ===== BUTTONS ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 32px;border-radius:8px;
+  font-size:0.9rem;font-weight:600;
+  text-decoration:none;cursor:pointer;
+  transition:all .25s;border:none;
+  line-height:1.2;
+}
+.btn-primary{background:var(--c-accent);color:#fff}
+.btn-primary:hover{background:var(--c-accent-dark);transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,.25)}
+.btn-outline{background:transparent;color:var(--c-black);border:1.5px solid var(--c-gray-300)}
+.btn-outline:hover{border-color:var(--c-accent);color:var(--c-accent);transform:translateY(-1px)}
+.btn-sm{padding:10px 20px;font-size:0.8rem}
+.btn-lg{padding:16px 40px;font-size:1rem}
+
+/* ===== STATS BAR ===== */
+.stats-bar{
+  background:var(--c-white);
+  border-top:1px solid var(--c-gray-200);
+  border-bottom:1px solid var(--c-gray-200);
+  padding:28px 0;
+}
+.stats-grid{display:flex;justify-content:space-around;align-items:center;gap:16px;flex-wrap:wrap}
+.stat-item{text-align:center;flex:1;min-width:140px}
+.stat-number{font-family:var(--font-serif);font-size:1.75rem;font-weight:700;color:var(--c-black);line-height:1.2}
+.stat-label{font-size:0.8rem;color:var(--c-gray-400);margin-top:4px}
+
+/* ===== FEATURES (MAGAZINE GRID) ===== */
+.features-magazine{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.feature-card{
+  background:var(--c-white);
+  border:1px solid var(--c-gray-200);
+  border-radius:8px;
+  padding:28px 24px;
+  position:relative;
+  transition:box-shadow .3s,transform .3s;
+}
+.feature-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.06);transform:translateY(-2px)}
+.feature-card.span-2{grid-column:span 2}
+.feature-card .fc-number{
+  font-family:var(--font-serif);
+  font-size:2.5rem;
+  font-weight:700;
+  color:var(--c-gray-100);
+  line-height:1;
+  margin-bottom:4px;
+}
+.feature-card .fc-icon{font-size:1.5rem;margin-bottom:12px}
+.feature-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px;line-height:1.4}
+.feature-card p{font-size:0.85rem;color:var(--c-gray-500);line-height:1.7}
+.feature-card .fc-tag{
+  display:inline-block;
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--c-accent);
+  background:rgba(37,99,235,.08);
+  padding:2px 8px;border-radius:3px;
+  margin-bottom:10px;
+  letter-spacing:.04em;
+}
+
+/* ===== CURRICULUM ===== */
+.curriculum-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.curriculum-item{
+  display:flex;align-items:flex-start;gap:14px;
+  background:var(--c-white);border:1px solid var(--c-gray-200);
+  border-radius:8px;padding:18px 20px;
+  transition:box-shadow .3s;
+}
+.curriculum-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.curriculum-item .ci-level{
+  flex-shrink:0;
+  width:28px;height:28px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:700;color:#fff;
+  margin-top:2px;
+}
+.ci-level.beginner{background:var(--c-green)}
+.ci-level.intermediate{background:var(--c-accent)}
+.ci-level.advanced{background:var(--c-purple)}
+.curriculum-item .ci-title{font-size:.9rem;font-weight:600;margin-bottom:2px}
+.curriculum-item .ci-desc{font-size:.78rem;color:var(--c-gray-400);line-height:1.5}
+.curriculum-item .ci-badge{
+  font-size:.6rem;font-weight:600;color:var(--c-accent);
+  background:rgba(37,99,235,.07);padding:1px 7px;border-radius:3px;
+  margin-left:auto;flex-shrink:0;
+}
+
+/* ===== PRICING ===== */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+.pricing-card{
+  background:var(--c-white);
+  border:1px solid var(--c-gray-200);
+  border-radius:12px;
+  padding:32px 28px;
+  position:relative;
+  transition:box-shadow .3s,transform .3s;
+}
+.pricing-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.06);transform:translateY(-3px)}
+.pricing-card.featured{
+  border-color:var(--c-accent);
+  border-top:4px solid var(--c-accent);
+  background:linear-gradient(180deg,rgba(37,99,235,.03) 0%,var(--c-white) 40%);
+  transform:scale(1.04);
+  z-index:2;
+  box-shadow:0 8px 32px rgba(37,99,235,.1);
+}
+.pricing-card.featured:hover{transform:scale(1.04) translateY(-3px)}
+.pricing-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--c-accent);color:#fff;
+  font-size:.65rem;font-weight:700;padding:4px 14px;border-radius:20px;
+  white-space:nowrap;letter-spacing:.04em;
+}
+.pricing-name{font-size:0.85rem;font-weight:600;color:var(--c-gray-400);margin-bottom:4px}
+.pricing-price{font-family:var(--font-serif);font-size:2.5rem;font-weight:700;line-height:1.2;margin-bottom:4px}
+.pricing-price .yen{font-size:1rem;font-weight:400;color:var(--c-gray-400)}
+.pricing-price .period{font-size:0.85rem;font-weight:400;color:var(--c-gray-400)}
+.pricing-tagline{font-size:0.82rem;color:var(--c-gray-500);margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--c-gray-100)}
+.pricing-features{list-style:none;margin-bottom:28px}
+.pricing-features li{
+  display:flex;align-items:center;gap:10px;
+  font-size:0.85rem;padding:8px 0;
+  border-bottom:1px solid var(--c-gray-50);
+}
+.pricing-features li:last-child{border-bottom:none}
+.pricing-features .check{color:var(--c-green);font-weight:700;flex-shrink:0}
+.pricing-features .cross{color:var(--c-red);font-weight:700;flex-shrink:0;opacity:.6}
+.pricing-features .strikethrough{text-decoration:line-through;color:var(--c-gray-400)}
+.pricing-card .btn{width:100%;justify-content:center}
+.pricing-card.featured .btn{background:var(--c-accent);color:#fff}
+.pricing-card.featured .btn:hover{background:var(--c-accent-dark)}
+
+/* comparison table */
+.compare-wrap{margin-top:40px}
+.compare-toggle{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:16px;background:var(--c-gray-50);
+  border:1px solid var(--c-gray-200);border-radius:8px;
+  cursor:pointer;font-size:0.9rem;font-weight:500;
+  transition:background .2s;
+}
+.compare-toggle:hover{background:var(--c-gray-100)}
+.compare-toggle .arrow{transition:transform .3s;display:inline-block}
+.compare-toggle.active .arrow{transform:rotate(180deg)}
+.compare-table-wrap{overflow:hidden;max-height:0;transition:max-height .5s ease}
+.compare-table-wrap.open{max-height:4000px}
+.compare-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:0.82rem}
+.compare-table th,.compare-table td{
+  padding:12px 16px;text-align:center;border:1px solid var(--c-gray-200);
+}
+.compare-table th{background:var(--c-gray-50);font-weight:600;text-align:left;min-width:160px}
+.compare-table td:first-child{text-align:left;font-weight:500;background:var(--c-gray-50)}
+.compare-table .group-header{background:var(--c-gray-100);font-weight:700;text-align:left}
+.compare-table .icon-check{color:var(--c-green)}
+.compare-table .icon-cross{color:var(--c-red);opacity:.5}
+
+/* ===== CASE STUDIES ===== */
+.case-study{padding:var(--section-gap) 0;border-bottom:1px solid var(--c-gray-200)}
+.case-study:last-child{border-bottom:none}
+.case-hero{
+  aspect-ratio:16/9;
+  background:var(--c-gray-200);
+  border-radius:12px;overflow:hidden;
+  margin-bottom:28px;
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.case-hero-img{width:100%;height:100%;object-fit:cover}
+.case-hero .ch-placeholder{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#dbeafe,#e0e7ff);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--c-accent);font-family:var(--font-serif);
+}
+.case-hero .ch-placeholder .ch-label{font-size:.8rem;opacity:.6;margin-bottom:8px}
+.case-hero .ch-placeholder .ch-name{font-size:1.5rem;font-weight:700}
+.case-meta{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:baseline;margin-bottom:24px}
+.case-name{font-family:var(--font-serif);font-size:1.75rem;font-weight:700;width:100%;margin-bottom:4px}
+.case-client{font-size:.9rem;color:var(--c-gray-500)}
+.case-year{font-size:.8rem;color:var(--c-gray-400)}
+.case-tags{display:flex;gap:8px;flex-wrap:wrap}
+.case-tag{
+  font-size:.65rem;font-weight:600;padding:3px 10px;
+  background:var(--c-gray-100);border-radius:4px;color:var(--c-gray-600);
+}
+.case-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  margin-bottom:40px;
+}
+.case-stat{
+  background:var(--c-white);border:1px solid var(--c-gray-200);
+  border-radius:8px;padding:24px 20px;text-align:center;
+}
+.case-stat-value{font-family:var(--font-serif);font-size:1.5rem;font-weight:700;color:var(--c-accent)}
+.case-stat-label{font-size:.8rem;color:var(--c-gray-500);margin-top:4px}
+.case-content-block{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:48px;align-items:start}
+.case-content-block .ccb-left{position:sticky;top:80px}
+.case-content-block .ccb-label{
+  font-size:.7rem;font-weight:700;letter-spacing:.12em;
+  color:var(--c-accent);margin-bottom:8px;
+}
+.case-content-block .ccb-title{
+  font-family:var(--font-serif);font-size:1.25rem;font-weight:700;line-height:1.5;
+}
+.case-content-block .ccb-body{font-size:.88rem;color:var(--c-gray-500);line-height:1.8}
+.case-content-block .ccb-body ul{list-style:none;margin-top:12px}
+.case-content-block .ccb-body ul li{padding:6px 0;padding-left:18px;position:relative}
+.case-content-block .ccb-body ul li::before{content:'▸';position:absolute;left:0;color:var(--c-accent)}
+.case-full-image{
+  width:100%;aspect-ratio:16/9;
+  background:var(--c-gray-100);border-radius:8px;
+  margin-bottom:48px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.case-full-image .cfi-placeholder{
+  color:var(--c-gray-300);font-family:var(--font-serif);font-size:1.1rem;
+}
+
+/* before-after */
+.before-after{display:grid;grid-template-columns:1fr 1fr;gap:4px;border-radius:8px;overflow:hidden;margin-bottom:48px}
+.ba-col{aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-serif);font-weight:700;position:relative}
+.ba-col.before{background:#f1f5f9;color:var(--c-gray-400)}
+.ba-col.after{background:var(--c-accent);color:#fff}
+.ba-col .ba-label{position:absolute;top:12px;left:12px;font-size:.65rem;opacity:.7}
+.ba-col .ba-value{font-size:1.8rem}
+.ba-col .ba-sub{font-size:.8rem;opacity:.8;font-weight:400}
+
+/* testimonial */
+.testimonial-block{
+  background:var(--c-white);border:1px solid var(--c-gray-200);
+  border-radius:12px;padding:40px 36px;margin-bottom:48px;
+  position:relative;
+}
+.testimonial-block::before{content:'"';font-family:var(--font-serif);font-size:5rem;color:var(--c-gray-100);position:absolute;top:8px;left:20px;line-height:1}
+.testimonial-quote{
+  font-family:var(--font-serif);font-size:1.15rem;line-height:1.7;
+  margin-bottom:16px;position:relative;z-index:1;
+}
+.testimonial-author{font-size:.85rem;font-weight:600}
+.testimonial-role{font-size:.75rem;color:var(--c-gray-400)}
+
+/* tech stack */
+.tech-stack{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}
+.tech-item{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;border:1px solid var(--c-gray-200);border-radius:6px;
+  font-size:.78rem;font-weight:500;color:var(--c-gray-500);
+  background:var(--c-white);
+}
+.tech-item .ti-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* case nav */
+.case-nav{display:flex;justify-content:space-between;align-items:center;padding-top:32px;border-top:1px solid var(--c-gray-200)}
+.case-nav-link{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--c-black);font-size:.85rem;font-weight:500;transition:color .2s}
+.case-nav-link:hover{color:var(--c-accent)}
+.case-nav-link .cn-thumb{width:48px;height:36px;background:var(--c-gray-100);border-radius:4px;flex-shrink:0}
+.case-nav-link.disabled{opacity:.3;pointer-events:none}
+.case-nav-dots{display:flex;gap:8px}
+.case-nav-dot{width:8px;height:8px;border-radius:50%;background:var(--c-gray-300);cursor:pointer;transition:background .2s}
+.case-nav-dot.active{background:var(--c-accent);width:24px;border-radius:4px}
+
+/* ===== MAGAZINE SIDEBAR ===== */
+.magazine-sidebar-layout{display:grid;grid-template-columns:1fr 320px;gap:40px}
+.magazine-sidebar .side-card{
+  background:var(--c-white);border:1px solid var(--c-gray-200);
+  border-radius:8px;padding:24px;margin-bottom:20px;
+}
+.magazine-sidebar .side-card h4{
+  font-size:.85rem;font-weight:700;margin-bottom:12px;
+  padding-bottom:8px;border-bottom:1px solid var(--c-gray-100);
+}
+.magazine-sidebar .side-card ul{list-style:none}
+.magazine-sidebar .side-card ul li{
+  font-size:.78rem;padding:6px 0;color:var(--c-gray-500);
+  border-bottom:1px dotted var(--c-gray-100);
+  cursor:pointer;transition:color .2s;
+}
+.magazine-sidebar .side-card ul li:hover{color:var(--c-accent)}
+
+/* ===== GLOSSARY / KNOWLEDGE ===== */
+.glossary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.glossary-item{padding:20px;background:var(--c-white);border:1px solid var(--c-gray-200);border-radius:8px}
+.glossary-item .gi-term{font-size:.9rem;font-weight:700;margin-bottom:4px}
+.glossary-item .gi-term .gi-en{font-size:.7rem;font-weight:400;color:var(--c-gray-400);margin-left:6px}
+.glossary-item .gi-def{font-size:.8rem;color:var(--c-gray-500);line-height:1.6}
+
+/* ===== FAQ ===== */
+.faq-list{max-width:800px}
+.faq-item{border-bottom:1px solid var(--c-gray-200);padding:20px 0}
+.faq-q{font-size:.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q .faq-toggle{font-size:1.2rem;color:var(--c-gray-400);transition:transform .3s;flex-shrink:0}
+.faq-q.open .faq-toggle{transform:rotate(45deg)}
+.faq-a{font-size:.85rem;color:var(--c-gray-500);line-height:1.7;margin-top:12px;display:none}
+.faq-a.open{display:block}
+
+/* ===== FOOTER ===== */
+.site-footer{
+  background:var(--c-black);color:var(--c-gray-300);
+  padding:60px 0 32px;
+}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand .site-logo{color:#fff}
+.footer-brand p{font-size:.8rem;margin-top:12px;line-height:1.7;max-width:320px}
+.footer-col h5{color:#fff;font-size:.85rem;font-weight:600;margin-bottom:16px}
+.footer-col ul{list-style:none}
+.footer-col ul li{font-size:.78rem;padding:5px 0;cursor:pointer;transition:color .2s}
+.footer-col ul li:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:.75rem}
+.footer-lang{display:flex;gap:12px}
+.footer-lang span{cursor:pointer;transition:color .2s}
+.footer-lang span:hover{color:#fff}
+.footer-lang span.active{color:var(--c-accent);font-weight:600}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .features-magazine{grid-template-columns:repeat(2,1fr)}
+  .feature-card.span-2{grid-column:span 1}
+  .pricing-grid{gap:16px}
+  .pricing-card{padding:24px 20px}
+  .pricing-card.featured{transform:scale(1.02)}
+  .pricing-card.featured:hover{transform:scale(1.02) translateY(-3px)}
+  .magazine-sidebar-layout{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .case-content-block{grid-template-columns:1fr;gap:24px}
+  .case-content-block .ccb-left{position:static}
+}
+@media(max-width:768px){
+  .header-nav{display:none}
+  .header-nav.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--c-bg);border-bottom:1px solid var(--c-gray-200);padding:16px 24px;gap:16px}
+  .mobile-toggle{display:block}
+  .hero-inner{flex-direction:column}
+  .hero-content{width:100%;padding:48px 24px 32px}
+  .hero-visual{width:100%;padding:0 24px 48px}
+  .hero-visual-inner{width:100%}
+  .hero-stat-bubble{display:none}
+  .features-magazine,.curriculum-grid,.pricing-grid,.glossary-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid .stat-item:nth-child(3){grid-column:span 2}
+  .case-stats{grid-template-columns:1fr}
+  .before-after{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .section-title{font-size:1.5rem}
+  .case-name{font-size:1.35rem}
+  .pricing-card.featured{transform:none}
+  .pricing-card.featured:hover{transform:translateY(-3px)}
+  .hero-ctas .btn{min-width:1px;width:100%}
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.animate-fade-up{animation:fadeUp .6s ease forwards}
+.animate-fade-in{animation:fadeIn .8s ease forwards}
+.animate-delay-1{animation-delay:.1s}
+.animate-delay-2{animation-delay:.2s}
+.animate-delay-3{animation-delay:.3s}
+.animate-delay-4{animation-delay:.4s}
+
+/* ===== PAGE TOP ===== */
+.page-top{position:fixed;bottom:32px;right:32px;z-index:99;opacity:0;pointer-events:none;transition:opacity .4s}
+.page-top.visible{opacity:1;pointer-events:auto}
+.page-top a{
+  display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--c-accent);color:#fff;
+  text-decoration:none;font-size:1.2rem;
+  box-shadow:0 4px 16px rgba(37,99,235,.25);
+  transition:background .2s,transform .2s;
+}
+.page-top a:hover{background:var(--c-accent-dark);transform:translateY(-2px)}
+
+/* ===== EXTRA UTILITIES ===== */
+.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}.mt-32{margin-top:32px}.mt-48{margin-top:48px}
+.mb-8{margin-bottom:8px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}.mb-32{margin-bottom:32px}.mb-48{margin-bottom:48px}
+.p-relative{position:relative}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--c-gray-50)}
+::-webkit-scrollbar-thumb{background:var(--c-gray-300);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--c-gray-400)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="site-logo">Aidake<span>.</span></a>
+    <nav class="header-nav" id="headerNav">
+      <a href="#features">学習プログラム</a>
+      <a href="#pricing">料金プラン</a>
+      <a href="#cases">導入事例</a>
+      <a href="#knowledge">知識ベース</a>
+      <a href="#faq">よくある質問</a>
+      <a href="#" class="header-cta">無料で始める</a>
+    </nav>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner container-wide">
+    <!-- left content -->
+    <div class="hero-content">
+      <div class="hero-badge animate-fade-up">AI搭載の株式学習プラットフォーム</div>
+      <h1 class="hero-title animate-fade-up animate-delay-1">
+        AIが変える、<br><em>株式学習の常識</em>
+      </h1>
+      <p class="hero-sub animate-fade-up animate-delay-2">
+        アイダケは、人工知能の力で株式市場の仕組みを<br class="hide-mobile">体系的に学べる教育プラットフォームです。<br>
+        初心者から経験者まで、それぞれのペースで知識を深められます。
+      </p>
+      <div class="hero-ctas animate-fade-up animate-delay-3">
+        <a href="#" class="btn btn-primary btn-lg">無料会員登録（基礎講座を体験）</a>
+        <a href="#" class="btn btn-outline btn-lg">カリキュラムの詳細を見る</a>
+      </div>
+      <p class="hero-note animate-fade-up animate-delay-4">※ 登録は無料です。クレジットカードは必要ありません。</p>
+    </div>
+    <!-- right visual -->
+    <div class="hero-visual animate-fade-in animate-delay-2">
+      <div class="hero-visual-inner">
+        <div class="hero-visual-content">
+          <div style="font-size:.7rem;font-weight:600;color:var(--c-accent);align-self:flex-start;margin-bottom:4%;background:rgba(37,99,235,.08);padding:2px 8px;border-radius:4px;">
+            AI Market Analysis
+          </div>
+          <div class="mock-chart">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+          <div class="mock-label">
+            <span>始値</span><span>高値</span><span>安値</span><span>終値</span><span>出来高</span>
+          </div>
+          <div style="margin-top:6%;display:flex;gap:6px;width:100%;flex-wrap:wrap;">
+            <span style="font-size:.55rem;background:var(--c-accent);color:#fff;padding:3px 8px;border-radius:3px;">移動平均線</span>
+            <span style="font-size:.55rem;background:rgba(37,99,235,.08);color:var(--c-accent);padding:3px 8px;border-radius:3px;">RSI</span>
+            <span style="font-size:.55rem;background:rgba(37,99,235,.08);color:var(--c-accent);padding:3px 8px;border-radius:3px;">MACD</span>
+            <span style="font-size:.55rem;background:rgba(37,99,235,.08);color:var(--c-accent);padding:3px 8px;border-radius:3px;">ボリンジャーバンド</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-stat-bubble top-right">学習完了率 <strong style="color:var(--c-accent)">87%</strong></div>
+      <div class="hero-stat-bubble bottom-left">受講者数 <strong style="color:var(--c-accent)">12,000+</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-number">12,000+</div><div class="stat-label">累計受講者数</div></div>
+      <div class="stat-item"><div class="stat-number">87%</div><div class="stat-label">講座完了率</div></div>
+      <div class="stat-item"><div class="stat-number">4.8/5.0</div><div class="stat-label">受講者満足度</div></div>
+      <div class="stat-item"><div class="stat-number">150+</div><div class="stat-label">提供レッスン数</div></div>
+      <div class="stat-item"><div class="stat-number">35名</div><div class="stat-label">現役アナリスト監修</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES / CURRICULUM -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-label">Learning Programs</div>
+    <h2 class="section-title">体系立ったカリキュラムで<br class="hide-mobile">無理なく学べる</h2>
+    <p class="section-subtitle">初心者向けの基礎講座から、プロを目指す応用コースまで。AIがあなたの理解度に合わせて最適な学習経路を提案します。</p>
+
+    <div class="magazine-sidebar-layout">
+      <div>
+        <!-- main feature cards -->
+        <div class="features-magazine mb-48">
+          <div class="feature-card">
+            <div class="fc-number">01</div>
+            <div class="fc-tag">FOUNDATION</div>
+            <h3>株式市場の基礎知識</h3>
+            <p>株価の仕組み、取引所の役割、株式指標の見方など、株式投資を理解するための基礎を体系的に学びます。</p>
+          </div>
+          <div class="feature-card">
+            <div class="fc-number">02</div>
+            <div class="fc-tag">ANALYSIS</div>
+            <h3>テクニカル分析入門</h3>
+            <p>チャートパターン、移動平均線、RSI、MACDなど、主要なテクニカル指標の読み方と活用法を習得します。</p>
+          </div>
+          <div class="feature-card">
+            <div class="fc-number">03</div>
+            <div class="fc-tag">FUNDAMENTALS</div>
+            <h3>ファンダメンタル分析</h3>
+            <p>財務諸表の読み解き方、企業価値評価、業界分析など、銘柄選定に必要な基礎知識を提供します。</p>
+          </div>
+          <div class="feature-card">
+            <div class="fc-number">04</div>
+            <div class="fc-tag">AI & DATA</div>
+            <h3>AIを活用した市場分析</h3>
+            <p>機械学習を用いた株価パターンの認識、自然言語処理によるニュース分析など、最新の分析手法を学びます。</p>
+          </div>
+          <div class="feature-card">
+            <div class="fc-number">05</div>
+            <div class="fc-tag">RISK</div>
+            <h3>リスク管理とポートフォリオ理論</h3>
+            <p>分散投資の理論、リスク指標の計算方法、ポートフォリオ最適化の基礎など、安定的な資産形成に必要な知識を提供します。</p>
+          </div>
+          <div class="feature-card">
+            <div class="fc-number">06</div>
+            <div class="fc-tag">PSYCHOLOGY</div>
+            <h3>株式心理学と行動ファイナンス</h3>
+            <p>投資判断における認知バイアス、感情のコントロール方法、確証バイアスや損失回避性向など行動ファイナンスの基礎を学びます。</p>
+          </div>
+        </div>
+
+        <!-- curriculum detail -->
+        <h3 class="mb-16" style="font-family:var(--font-serif);font-size:1.25rem;">レベル別カリキュラム一覧</h3>
+        <div class="curriculum-grid mb-48">
+          <div class="curriculum-item">
+            <div class="ci-level beginner">初</div>
+            <div>
+              <div class="ci-title">株式取引の流れを理解する</div>
+              <div class="ci-desc">注文方法・取引時間・手数料の仕組みを解説</div>
+            </div>
+            <div class="ci-badge">6レッスン</div>
+          </div>
+          <div class="curriculum-item">
+            <div class="ci-level beginner">初</div>
+            <div>
+              <div class="ci-title">チャートの見方・基本パターン</div>
+              <div class="ci-desc">ローソク足・出来高・トレンドラインの基礎</div>
+            </div>
+            <div class="ci-badge">8レッスン</div>
+          </div>
+          <div class="curriculum-item">
+            <div class="ci-level intermediate">中</div>
+            <div>
+              <div class="ci-title">テクニカル指標の実践活用</div>
+              <div class="ci-desc">移動平均線・ボリンジャーバンドの応用</div>
+            </div>
+            <div class="ci-badge">10レッスン</div>
+          </div>
+          <div class="curriculum-item">
+            <div class="ci-level intermediate">中</div>
+            <div>
+              <div class="ci-title">財務指標から企業を評価する</div>
+              <div class="ci-desc">PER・PBR・ROEなどの実践的活用法</div>
+            </div>
+            <div class="ci-badge">8レッスン</div>
+          </div>
+          <div class="curriculum-item">
+            <div class="ci-level advanced">上</div>
+            <div>
+              <div class="ci-title">AI分析ツールの活用方法</div>
+              <div class="ci-desc">機械学習モデルを使った市場分析の実践</div>
+            </div>
+            <div class="ci-badge">12レッスン</div>
+          </div>
+          <div class="curriculum-item">
+            <div class="ci-level advanced">上</div>
+            <div>
+              <div class="ci-title">ポートフォリオ最適化戦略</div>
+              <div class="ci-desc">分散投資・リスクパリティ・効率的フロンティア</div>
+            </div>
+            <div class="ci-badge">10レッスン</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- sidebar -->
+      <div class="magazine-sidebar">
+        <div class="side-card">
+          <h4>📊 本日のトピックス</h4>
+          <ul>
+            <li>移動平均線のゴールデンクロスとは</li>
+            <li>決算発表の見方・注目ポイント</li>
+            <li>配当利回りの計算方法と活用法</li>
+            <li>ETFと個別株の違いを解説</li>
+            <li>信用取引のリスクと仕組み</li>
+          </ul>
+        </div>
+        <div class="side-card">
+          <h4>🏷️ タグから探す</h4>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <span style="font-size:.7rem;padding:4px 10px;background:var(--c-gray-50);border-radius:4px;color:var(--c-gray-500);cursor:pointer;">#初心者向け</span>
+            <span style="font-size:.7rem;padding:4px 10px;background:var(--c-gray-50);border-radius:4px;color:var(--c-gray-500);cursor:pointer;">#テクニカル</span>
+            <span style="font-size:.7rem;padding:4px 10px;background:var(--c-gray-50);border-radius:4px;color:var(--c-gray-500);cursor:pointer;">#ファンダメンタル</span>
+            <span style="font-size:.7rem;padding:4px 10px;background:var(--c-gray-50);border-radius:4px;color:var(--c-gray-500);cursor:pointer;">#AI分析</span>
+            <span style="font-size:.7rem;padding:4px 10px;background:var(--c-gray-50);border-radius:4px;color:var(--c-gray-500);cursor:pointer;">#リスク管理</span>
+            <span style="font-size:.7rem;padding:4px 10px;background:var(--c-gray-50);border-radius:4px;color:var(--c-gray-500);cursor:pointer;">#ポートフォリオ</span>
+            <span style="font-size:.7rem;padding:4px 10px;background:var(--c-gray-50);border-radius:4px;color:var(--c-gray-500);cursor:pointer;">#初心者向け</span>
+            <span style="font-size:.7rem;padding:4px 10px;background:var(--c-gray-50);border-radius:4px;color:var(--c-gray-500);cursor:pointer;">#行動ファイナンス</span>
+          </div>
+        </div>
+        <div class="side-card">
+          <h4>📚 おすすめ学習コース</h4>
+          <ul>
+            <li>【初心者】3日でわかる株式入門</li>
+            <li>【中級】チャート分析マスター講座</li>
+            <li>【上級】AI活用データ分析実践</li>
+            <li>【全レベル】ポートフォリオ構築術</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-label">Pricing Plans</div>
+    <h2 class="section-title">継続しやすい料金設定</h2>
+    <p class="section-subtitle">すべてのプランに基礎講座が含まれています。上位プランでは高度な分析ツールやマンツーメンタリングが利用可能です。</p>
+
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="pricing-card">
+        <div class="pricing-name">エントリー</div>
+        <div class="pricing-price"><span class="yen">¥</span>0<span class="period">/月</span></div>
+        <div class="pricing-tagline">まずは無料で基礎を学びたい方に</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 基礎講座20レッスン</li>
+          <li><span class="check">✓</span> 週次マーケットレポート</li>
+          <li><span class="check">✓</span> コミュニティフォーラム参加</li>
+          <li><span class="cross">✗</span> <span class="strikethrough">テクニカル分析ツール</span></li>
+          <li><span class="cross">✗</span> <span class="strikethrough">AI分析機能</span></li>
+          <li><span class="cross">✗</span> <span class="strikethrough">マンツーメンタリング</span></li>
+        </ul>
+        <a href="#" class="btn btn-outline btn-sm">無料で登録</a>
+      </div>
+
+      <!-- Professional -->
+      <div class="pricing-card featured">
+        <div class="pricing-badge">最も人気</div>
+        <div class="pricing-name">プロフェッショナル</div>
+        <div class="pricing-price"><span class="yen">¥</span>3,980<span class="period">/月</span></div>
+        <div class="pricing-tagline">本格的にスキルを磨きたい方に最適なプラン</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 全講座100+レッスン</li>
+          <li><span class="check">✓</span> テクニカル分析ツール</li>
+          <li><span class="check">✓</span> AIチャート認識機能</li>
+          <li><span class="check">✓</span> 週次ウェビナー参加</li>
+          <li><span class="cross">✗</span> <span class="strikethrough">マンツーメンタリング</span></li>
+          <li><span class="cross">✗</span> <span class="strikethrough">APIアクセス</span></li>
+        </ul>
+        <a href="#" class="btn btn-primary btn-sm">7日間無料トライアル</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card">
+        <div class="pricing-name">エンタープライズ</div>
+        <div class="pricing-price"><span class="yen">¥</span>9,800<span class="period">/月</span></div>
+        <div class="pricing-tagline">プロトレーダー・法人向けの包括プラン</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 全講座100+レッスン</li>
+          <li><span class="check">✓</span> テクニカル分析ツール</li>
+          <li><span class="check">✓</span> AIチャート認識機能</li>
+          <li><span class="check">✓</span> 週次ウェビナー参加</li>
+          <li><span class="check">✓</span> マンツーメンタリング（月2回）</li>
+          <li><span class="check">✓</span> APIアクセス（データ分析用）</li>
+        </ul>
+        <a href="#" class="btn btn-outline btn-sm">プランを申し込む</a>
+      </div>
+    </div>
+
+    <!-- comparison table -->
+    <div class="compare-wrap">
+      <button class="compare-toggle" id="compareToggle">
+        すべての機能を比較する <span class="arrow">▾</span>
+      </button>
+      <div class="compare-table-wrap" id="compareTableWrap">
+        <table class="compare-table">
+          <thead>
+            <tr><th>機能</th><th>エントリー</th><th>プロフェッショナル</th><th>エンタープライズ</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="group-header" colspan="4">📚 学習コンテンツ</td></tr>
+            <tr><td>基礎講座（20レッスン）</td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>応用講座（80+レッスン）</td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>専門講座（50+レッスン）</td><td><span class="icon-cross">✗</span></td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>理解度テストと復習機能</td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td class="group-header" colspan="4">🔧 分析ツール</td></tr>
+            <tr><td>テクニカル分析ツール</td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>AIチャート認識</td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>自然言語処理ニュース分析</td><td><span class="icon-cross">✗</span></td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>バックテスト機能</td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>APIアクセス</td><td><span class="icon-cross">✗</span></td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td class="group-header" colspan="4">👨‍🏫 サポート体制</td></tr>
+            <tr><td>コミュニティフォーラム</td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>週次ウェビナー</td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>マンツーメンタリング</td><td><span class="icon-cross">✗</span></td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>メールサポート</td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td><td><span class="icon-check">✓</span></td></tr>
+            <tr><td>専任アカウントマネージャー</td><td><span class="icon-cross">✗</span></td><td><span class="icon-cross">✗</span></td><td><span class="icon-check">✓</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CASE STUDIES -->
+<section class="section" id="cases">
+  <div class="container">
+    <div class="section-label">Case Studies</div>
+    <h2 class="section-title">学習者の声・導入事例</h2>
+    <p class="section-subtitle">アイダケを活用して知識を深めた方々の事例をご紹介します。実際の學習成果と活用方法をご覧ください。</p>
+  </div>
+
+  <!-- Case 1 -->
+  <div class="case-study">
+    <div class="container">
+      <div class="case-hero">
+        <div class="ch-placeholder">
+          <div class="ch-label">CASE STUDY</div>
+          <div class="ch-name">テクニカル分析マスターコース修了者の学習記録</div>
+        </div>
+      </div>
+      <div class="case-meta">
+        <div class="case-name">テクニカル分析の体系的な学習による<span style="color:var(--c-accent)">チャート読解力の向上</span></div>
+        <div class="case-client">鈴木 健一 様</div>
+        <div class="case-year">2025年</div>
+        <div class="case-tags">
+          <span class="case-tag">学習設計</span>
+          <span class="case-tag">カリキュラム開発</span>
+          <span class="case-tag">AI活用</span>
+        </div>
+      </div>
+
+      <div class="case-stats">
+        <div class="case-stat">
+          <div class="case-stat-value">+42%</div>
+          <div class="case-stat-label">チャート分析精度の向上</div>
+        </div>
+        <div class="case-stat">
+          <div class="case-stat-value">2.5倍</div>
+          <div class="case-stat-label">学習速度の向上</div>
+        </div>
+        <div class="case-stat">
+          <div class="case-stat-value">96%</div>
+          <div class="case-stat-label">講座満足度</div>
+        </div>
+      </div>
+
+      <div class="case-content-block">
+        <div class="ccb-left">
+          <div class="ccb-label">背景</div>
+          <div class="ccb-title">株式学習における体系化されたカリキュラムの必要性</div>
+        </div>
+        <div class="ccb-body">
+          <p>鈴木さんは3年間の独学経験をお持ちでしたが、断片的な知識に悩まれていました。チャートのパターンは認識できても、なぜそのパターンが形成されるのか、どのような市場心理が背景にあるのかを理解しないまま学習を進めていたため、応用力に限界を感じていたといいます。</p>
+          <ul>
+            <li>独学から体系的な学習への移行を支援</li>
+            <li>AIによる学習進捗の可視化で効率向上</li>
+            <li>週次ウェビナーでの知識定着を促進</li>
+            <li>コミュニティでのディスカッションで理解を深化</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="case-full-image">
+        <div class="cfi-placeholder">📈 学習前後のチャート読解精度の変化（グラフ）</div>
+      </div>
+
+      <div class="case-content-block">
+        <div class="ccb-left">
+          <div class="ccb-label">アプローチ</div>
+          <div class="ccb-title">AIが個別最適化する学習経路</div>
+        </div>
+        <div class="ccb-body">
+          <p>アイダケのAI学習アシスタントは、鈴木さんの理解度をリアルタイムで分析。「移動平均線の種類と計算方法」については基礎レベルをスキップし、応用の「マルチタイムフレーム分析」に集中的に時間を割くカリキュラムを提案しました。これにより、無駄のない効率的な学習が実現しました。</p>
+          <ul>
+            <li>学習開始時の理解度診断テストを実施</li>
+            <li>AIが個々の習熟度に応じてカリキュラムを調整</li>
+            <li>苦手分野を特定し、重点的な復習を提案</li>
+            <li>週次の振り返りレポートで進捗を可視化</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- before/after -->
+      <div class="before-after">
+        <div class="ba-col before">
+          <div class="ba-label">BEFORE</div>
+          <div class="ba-value">断片的な知識</div>
+          <div class="ba-sub">体系だった理解が不足</div>
+        </div>
+        <div class="ba-col after">
+          <div class="ba-label">AFTER</div>
+          <div class="ba-value">体系的な思考</div>
+          <div class="ba-sub">チャートの文脈を読解</div>
+        </div>
+      </div>
+
+      <!-- testimonial -->
+      <div class="testimonial-block">
+        <div class="testimonial-quote">
+          これまで本を何冊読んでも身につかなかった知識が、アイダケの体系的なカリキュラムとAIアシスタントのおかげで、驚くほどスムーズに理解できるようになりました。特に、自分の理解度に合わせてカリキュラムが最適化される点が画期的です。
+        </div>
+        <div class="testimonial-author">鈴木 健一</div>
+        <div class="testimonial-role">テクニカル分析マスターコース修了生 / 個人投資家</div>
+      </div>
+
+      <!-- tech stack -->
+      <div class="tech-stack">
+        <div class="tech-item"><span class="ti-dot" style="background:var(--c-accent)"></span>AI学習アシスタント</div>
+        <div class="tech-item"><span class="ti-dot" style="background:var(--c-green)"></span>チャート認識機能</div>
+        <div class="tech-item"><span class="ti-dot" style="background:var(--c-purple)"></span>進捗管理ダッシュボード</div>
+        <div class="tech-item"><span class="ti-dot" style="background:var(--c-orange)"></span>週次ウェビナー</div>
+        <div class="tech-item"><span class="ti-dot" style="background:var(--c-gold)"></span>コミュニティフォーラム</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 2 -->
+  <div class="case-study">
+    <div class="container">
+      <div class="case-hero">
+        <div class="ch-placeholder" style="background:linear-gradient(135deg,#fce7f3,#ffe4e6);color:#be185d">
+          <div class="ch-label">CASE STUDY</div>
+          <div class="ch-name">初心者から6ヶ月で基礎を習得した学習記録</div>
+        </div>
+      </div>
+      <div class="case-meta">
+        <div class="case-name">株式知識ゼロから<span style="color:var(--c-accent)">6ヶ月で基礎を完全習得</span></div>
+        <div class="case-client">田中 由美 様</div>
+        <div class="case-year">2025年</div>
+        <div class="case-tags">
+          <span class="case-tag">教育設計</span>
+          <span class="case-tag">初心者支援</span>
+          <span class="case-tag">学習分析</span>
+        </div>
+      </div>
+
+      <div class="case-stats">
+        <div class="case-stat">
+          <div class="case-stat-value">100%</div>
+          <div class="case-stat-label">基礎講座修了率</div>
+        </div>
+        <div class="case-stat">
+          <div class="case-stat-value">3.2h</div>
+          <div class="case-stat-label">週平均学習時間</div>
+        </div>
+        <div class="case-stat">
+          <div class="case-stat-value">85%</div>
+          <div class="case-stat-label">理解度テスト平均点</div>
+        </div>
+      </div>
+
+      <div class="case-content-block">
+        <div class="ccb-left">
+          <div class="ccb-label">背景</div>
+          <div class="ccb-title">初心者が直面する学習の壁とその克服</div>
+        </div>
+        <div class="ccb-body">
+          <p>田中さんは株式に関する知識がまったくない状態から学習を開始。特に専門用語の多さと情報の取捨選択に悩まれていました。アイダケでは、用語解説機能と段階的なカリキュラム設計により、初心者でも無理なく学習を進められる環境を提供しています。</p>
+          <ul>
+            <li>専門用語はAIが即時解説</li>
+            <li>スモールステップでの学習設計</li>
+            <li>クイズ形式の復習で定着率向上</li>
+            <li>学習時間は1日20分からスタート</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="testimonial-block">
+        <div class="testimonial-quote">
+          株式ってなんだか難しそうで今まで避けていましたが、アイダケのわかりやすい講座のおかげで、基本的な知識がしっかり身につきました。特に動画とテキストが両方あるので、自分のペースで学べるのが良かったです。
+        </div>
+        <div class="testimonial-author">田中 由美</div>
+        <div class="testimonial-role">基礎講座修了生 / 会社員</div>
+      </div>
+
+      <div class="tech-stack">
+        <div class="tech-item"><span class="ti-dot" style="background:var(--c-accent)"></span>初心者向けカリキュラム</div>
+        <div class="tech-item"><span class="ti-dot" style="background:var(--c-green)"></span>用語解説AI</div>
+        <div class="tech-item"><span class="ti-dot" style="background:var(--c-purple)"></span>進捗管理機能</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- case navigation -->
+  <div class="container">
+    <div class="case-nav">
+      <a href="#" class="case-nav-link disabled">
+        <span class="cn-thumb"></span>
+        <span>← 前の事例</span>
+      </a>
+      <div class="case-nav-dots">
+        <span class="case-nav-dot active"></span>
+        <span class="case-nav-dot"></span>
+        <span class="case-nav-dot"></span>
+      </div>
+      <a href="#" class="case-nav-link">
+        <span>次の事例 →</span>
+        <span class="cn-thumb"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- KNOWLEDGE / GLOSSARY -->
+<section class="section" id="knowledge">
+  <div class="container">
+    <div class="section-label">Stock Knowledge Base</div>
+    <h2 class="section-title">株式学習に役立つ知識ベース</h2>
+    <p class="section-subtitle">頻出する専門用語から実践的な分析手法まで、株式学習に必要な知識をわかりやすく解説します。</p>
+
+    <div class="glossary-grid">
+      <div class="glossary-item">
+        <div class="gi-term">移動平均線 <span class="gi-en">Moving Average</span></div>
+        <div class="gi-def">一定期間の株価の平均値を結んだ線。短期線と長期線の組み合わせでトレンドの方向性を判断するために用いられます。ゴールデンクロスやデッドクロスは典型的な売買シグナルとして知られています。</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gi-term">RSI <span class="gi-en">Relative Strength Index</span></div>
+        <div class="gi-def">一定期間の値動きに対する買いの強さを0%〜100%で示すオシレーター系指標。70%以上で買われすぎ、30%以下で売られすぎと一般的に解釈されます。ダイバージェンスの分析にも用いられます。</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gi-term">ボリンジャーバンド <span class="gi-en">Bollinger Bands</span></div>
+        <div class="gi-def">移動平均線を中心に、標準偏差の幅を持たせた帯状の指標。価格がバンドの外側に位置する場合は、統計的に異常値である可能性が高く、価格の反転が期待されることがあります。バンドの拡大・縮小も重要なシグナルです。</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gi-term">PER <span class="gi-en">Price Earnings Ratio</span></div>
+        <div class="gi-def">株価を1株あたりの純利益で割った値。企業の収益力に対して株価が適正かどうかを判断する指標として広く用いられます。業種平均との比較や、同業他社との比較に用いることでより実践的な評価が可能です。</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gi-term">PBR <span class="gi-en">Price Book-Value Ratio</span></div>
+        <div class="gi-def">株価を1株あたりの純資産で割った指標。1倍を下回ると、企業の解散価値よりも株価が低く評価されている可能性を示します。ただし、業種や成長性によって適正値は大きく異なるため、単独での判断は注意が必要です。</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gi-term">配当利回り <span class="gi-en">Dividend Yield</span></div>
+        <div class="gi-def">1株あたりの年間配当金を株価で割った割合。投資金額に対してどれだけの配当が得られるかを示します。高配当株の選定や、インカムゲインを重視した投資戦略において重要な指標となります。</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gi-term">ポートフォリオ <span class="gi-en">Portfolio</span></div>
+        <div class="gi-def">保有する複数の金融商品の組み合わせのこと。分散投資によりリスクを低減しながら、安定したリターンを目指すことが目的です。現代ポートフォリオ理論（MPT）では、効率的フロンティアを用いた最適化が研究されています。</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gi-term">出来高 <span class="gi-en">Trading Volume</span></div>
+        <div class="gi-def">一定期間に成立した取引の数量。出来高の増加はその価格帯への関心の高まりを示し、トレンドの強さを測る指標として活用されます。価格変動と出来高の関係を分析することで、相場参加者の心理を推測することができます。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-label">Frequently Asked Questions</div>
+    <h2 class="section-title">よくあるご質問</h2>
+    <p class="section-subtitle">アイダケのサービスに関するよくある質問をまとめました。その他ご不明な点がございましたら、お気軽にお問い合わせください。</p>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">株式投資の経験が全くありませんが、大丈夫ですか？<span class="faq-toggle">+</span></div>
+        <div class="faq-a">はい、まったくの初心者の方でも安心して始められるよう、ゼロから学べる基礎講座をご用意しています。専門用語はAIが即座に解説、段階的なステップで無理なく学習を進められます。まずは無料のエントリープランでお試しください。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">学習に必要な時間はどのくらいですか？<span class="faq-toggle">+</span></div>
+        <div class="faq-a">1日20分からの学習を推奨しています。基礎講座は約20時間で修了可能な設計で、週3回のペースで学習いただくと約2ヶ月で一通りの基礎を習得いただけます。もちろん、ご自身のペースで進めていただけますので、忙しい方でも無理なく続けられます。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">AI分析機能はどのように活用できますか？<span class="faq-toggle">+</span></div>
+        <div class="faq-a">プロフェッショナルプラン以上でご利用いただけるAI分析機能では、チャートパターンの自動認識、テクニカル指標の総合分析、ニュース記事の感情分析などを提供しています。これらの機能は学習ツールとして設計されており、実際の市場理解を深めるための補助としてご活用いただけます。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">料金プランの変更や解約はできますか？<span class="faq-toggle">+</span></div>
+        <div class="faq-a">はい、いつでもプランの変更や解約が可能です。アップグレードは即時に反映され、ダウングレードは次回請求サイクルから適用されます。解約後も、その時点までに公開済みのコンテンツには一定期間アクセスいただけます。詳しくは利用規約をご確認ください。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">提供されている情報は正確ですか？情報の更新頻度は？<span class="faq-toggle">+</span></div>
+        <div class="faq-a">アイダケの教育コンテンツは、現役の金融アナリストと教育専門家が共同で監修しており、定期的に内容の見直しと更新を行っています。市場環境や制度の変更に合わせて、少なくとも四半期に一度は全コンテンツのレビューを実施しています。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">法人での導入は可能ですか？<span class="faq-toggle">+</span></div>
+        <div class="faq-a">はい、法人向けのエンタープライズプランをご用意しています。従業員の金融リテラシー向上や、業務に必要な株式知識の習得など、様々なニーズに対応可能です。法人契約に関する詳細は、お問い合わせフォームよりご連絡ください。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CTA BANNER -->
+<section class="section" style="padding:60px 0;text-align:center;">
+  <div class="container">
+    <div class="section-label" style="text-align:center;">Get Started</div>
+    <h2 class="section-title" style="max-width:600px;margin:0 auto 16px;">まずは無料で始めてみませんか？</h2>
+    <p style="font-size:.9rem;color:var(--c-gray-500);margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto;">
+      クレジットカード不要、登録は30秒で完了します。<br>
+      基礎講座20レッスンを今すぐ体験できます。
+    </p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="#" class="btn btn-primary btn-lg">無料で会員登録する</a>
+      <a href="#" class="btn btn-outline btn-lg">カリキュラムを見る</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="site-logo">Aidake<span>.</span></div>
+        <p>AIを活用した次世代の株式教育プラットフォーム。<br>
+        中立・客観的な立場から、株式市場の仕組みを体系的に学ぶ場を提供しています。</p>
+      </div>
+      <div class="footer-col">
+        <h5>学習プログラム</h5>
+        <ul>
+          <li>基礎講座</li>
+          <li>テクニカル分析</li>
+          <li>ファンダメンタル分析</li>
+          <li>AI分析講座</li>
+          <li>リスク管理</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>サポート</h5>
+        <ul>
+          <li>よくある質問</li>
+          <li>お問い合わせ</li>
+          <li>利用規約</li>
+          <li>プライバシーポリシー</li>
+          <li>特定商取引法に基づく表記</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>会社情報</h5>
+        <ul>
+          <li>運営会社</li>
+          <li>講師紹介</li>
+          <li>メディア掲載</li>
+          <li>採用情報</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Aidake. All rights reserved.</span>
+      <div class="footer-lang">
+        <span class="active">日本語</span>
+        <span>English</span>
+        <span>中文</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- PAGE TOP -->
+<div class="page-top" id="pageTop">
+  <a href="#">↑</a>
+</div>
+
+<script>
+// Mobile nav toggle
+document.getElementById('mobileToggle').addEventListener('click',function(){
+  const nav=document.getElementById('headerNav');
+  nav.classList.toggle('open');
+});
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(function(el){
+  el.addEventListener('click',function(){
+    this.classList.toggle('open');
+    const answer=this.nextElementSibling;
+    answer.classList.toggle('open');
+  });
+});
+
+// Compare table toggle
+document.getElementById('compareToggle').addEventListener('click',function(){
+  this.classList.toggle('active');
+  document.getElementById('compareTableWrap').classList.toggle('open');
+});
+
+// Page top button
+window.addEventListener('scroll',function(){
+  const btn=document.getElementById('pageTop');
+  if(window.scrollY>400){btn.classList.add('visible')}
+  else{btn.classList.remove('visible')}
+});
+
+// Case study dots
+document.querySelectorAll('.case-nav-dot').forEach(function(dot){
+  dot.addEventListener('click',function(){
+    document.querySelectorAll('.case-nav-dot').forEach(function(d){d.classList.remove('active')});
+    this.classList.add('active');
+  });
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    const target=document.querySelector(this.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'})}
+    // close mobile nav
+    document.getElementById('headerNav').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
