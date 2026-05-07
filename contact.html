@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ | アイダケ</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c-bg:#faf8f5;--c-white:#fff;--c-black:#1a1a1e;
+  --c-gray-100:#eeeef0;--c-gray-200:#dddde0;--c-gray-300:#b0b0b8;
+  --c-gray-400:#80808a;--c-gray-500:#5c5c66;
+  --c-accent:#2563eb;--c-accent-dark:#1d4ed8;
+  --c-green:#16a34a;--c-red:#dc2626;
+  --font-sans:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --font-serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --max-w:800px;
+}
+body{font-family:var(--font-sans);color:var(--c-black);background:var(--c-bg);line-height:1.9;-webkit-font-smoothing:antialiased}
+.page-header{position:sticky;top:0;z-index:100;background:rgba(250,248,245,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--c-gray-200)}
+.header-inner{max-width:1000px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.site-logo{font-family:var(--font-serif);font-size:1.35rem;font-weight:700;text-decoration:none;color:var(--c-black);letter-spacing:.04em}
+.site-logo span{color:var(--c-accent)}
+.back-link{font-size:.85rem;color:var(--c-gray-500);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--c-black)}
+.page-content{max-width:var(--max-w);margin:0 auto;padding:60px 24px}
+.page-content h1{font-family:var(--font-serif);font-size:1.75rem;margin-bottom:8px}
+.page-content .subtitle{font-size:.9rem;color:var(--c-gray-500);margin-bottom:40px}
+
+.contact-form{max-width:560px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px}
+.form-group .required{color:var(--c-red)}
+.form-group input,.form-group textarea{
+  width:100%;padding:12px 14px;border:1.5px solid var(--c-gray-200);
+  border-radius:8px;font-size:.95rem;font-family:var(--font-sans);
+  color:var(--c-black);background:var(--c-white);transition:border-color .2s,box-shadow .2s;
+}
+.form-group textarea{min-height:140px;resize:vertical}
+.form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--c-accent);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:all .25s;background:var(--c-accent);color:#fff}
+.btn:hover{background:var(--c-accent-dark);transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,.25)}
+.btn:disabled{opacity:.55;pointer-events:none}
+
+.success-msg{display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:20px 24px;margin-top:24px}
+.success-msg.visible{display:block}
+.success-msg p{font-size:.9rem;color:var(--c-green)}
+
+@media(max-width:640px){.page-content{padding:40px 20px}.page-content h1{font-size:1.4rem}}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">Aidake<span>.</span></a>
+    <a href="index.html" class="back-link">← トップに戻る</a>
+  </div>
+</header>
+
+<main class="page-content">
+  <h1>お問い合わせ</h1>
+  <p class="subtitle">ご質問やご意見がございましたら、以下のフォームよりお気軽にお寄せください。</p>
+
+  <form class="contact-form" id="contactForm">
+    <div class="form-group">
+      <label for="name">お名前<span class="required">*</span></label>
+      <input type="text" id="name" name="name" required placeholder="例：山田 太郎">
+    </div>
+    <div class="form-group">
+      <label for="email">メールアドレス<span class="required">*</span></label>
+      <input type="email" id="email" name="email" required placeholder="例：taro@example.com">
+    </div>
+    <div class="form-group">
+      <label for="subject">件名</label>
+      <input type="text" id="subject" name="subject" placeholder="お問い合わせ内容の概要">
+    </div>
+    <div class="form-group">
+      <label for="message">お問い合わせ内容<span class="required">*</span></label>
+      <textarea id="message" name="message" required placeholder="お問い合わせ内容を入力してください"></textarea>
+    </div>
+    <button type="submit" class="btn" id="submitBtn">送信する</button>
+    <div class="success-msg" id="successMsg">
+      <p>お問い合わせを受け付けました。内容を確認の上、2〜3営業日以内にご連絡いたします。</p>
+    </div>
+  </form>
+</main>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '送信中...';
+  setTimeout(function(){
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('successMsg').classList.add('visible');
+  }, 800);
+});
+</script>
+
+</body>
+</html>
