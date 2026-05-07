@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>無料会員登録 | アイダケ</title>
+<meta name="description" content="アイダケの無料会員登録フォーム。AI株式教育を今すぐ始めましょう。">
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c-bg:#faf8f5;
+  --c-white:#fff;
+  --c-black:#1a1a1e;
+  --c-gray-100:#eeeef0;
+  --c-gray-200:#dddde0;
+  --c-gray-300:#b0b0b8;
+  --c-gray-400:#80808a;
+  --c-gray-500:#5c5c66;
+  --c-accent:#2563eb;
+  --c-accent-light:#3b82f6;
+  --c-accent-dark:#1d4ed8;
+  --c-green:#16a34a;
+  --c-green-bg:#f0fdf4;
+  --c-red:#dc2626;
+  --c-red-bg:#fef2f2;
+  --font-sans:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --font-serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --max-w:1200px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);color:var(--c-black);background:var(--c-bg);line-height:1.8;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* ===== HEADER ===== */
+.form-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,245,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--c-gray-200);
+}
+.form-header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:var(--max-w);margin:0 auto;padding:0 24px;height:64px;
+}
+.form-logo{
+  font-family:var(--font-serif);
+  font-size:1.35rem;font-weight:700;
+  text-decoration:none;color:var(--c-black);
+  letter-spacing:.04em;
+}
+.form-logo span{color:var(--c-accent)}
+.form-back{
+  font-size:0.85rem;text-decoration:none;color:var(--c-gray-500);
+  font-weight:500;transition:color .2s;
+}
+.form-back:hover{color:var(--c-black)}
+
+/* ===== FORM SECTION ===== */
+.form-section{
+  display:flex;align-items:center;justify-content:center;
+  min-height:calc(100vh - 64px);
+  padding:60px 24px;
+}
+.form-card{
+  background:var(--c-white);
+  border-radius:16px;
+  padding:48px 40px;
+  max-width:560px;width:100%;
+  box-shadow:0 1px 3px rgba(0,0,0,.04),0 8px 32px rgba(0,0,0,.06);
+}
+.form-card h1{
+  font-family:var(--font-serif);
+  font-size:1.6rem;font-weight:700;
+  margin-bottom:4px;
+}
+.form-card .form-subtitle{
+  font-size:0.9rem;color:var(--c-gray-500);
+  margin-bottom:32px;
+}
+
+/* ===== FORM ELEMENTS ===== */
+.form-group{margin-bottom:20px}
+.form-group label{
+  display:block;
+  font-size:0.85rem;font-weight:600;
+  margin-bottom:6px;
+  color:var(--c-black);
+}
+.form-group .required{color:var(--c-red);margin-left:2px}
+.form-group input,
+.form-group select{
+  width:100%;
+  padding:12px 14px;
+  border:1.5px solid var(--c-gray-200);
+  border-radius:8px;
+  font-size:0.95rem;
+  font-family:var(--font-sans);
+  color:var(--c-black);
+  background:var(--c-bg);
+  transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;appearance:none;
+}
+.form-group select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2380808a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  padding-right:36px;
+}
+.form-group input:focus,
+.form-group select:focus{
+  outline:none;
+  border-color:var(--c-accent);
+  box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+.form-group input.error,
+.form-group select.error{
+  border-color:var(--c-red);
+  box-shadow:0 0 0 3px rgba(220,38,38,.08);
+}
+.field-error{font-size:0.75rem;color:var(--c-red);margin-top:4px;display:none}
+.field-error.visible{display:block}
+
+/* ===== CHECKBOX ===== */
+.form-check{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:0.85rem;color:var(--c-gray-500);
+  margin-bottom:24px;cursor:pointer;
+}
+.form-check input[type="checkbox"]{
+  width:18px;height:18px;margin-top:3px;flex-shrink:0;
+  accent-color:var(--c-accent);cursor:pointer;
+}
+.form-check a{color:var(--c-accent);text-decoration:underline}
+
+/* ===== BUTTON ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 28px;border-radius:8px;font-size:0.9rem;font-weight:600;
+  text-decoration:none;cursor:pointer;border:none;
+  transition:background .2s,transform .2s,box-shadow .2s;
+  font-family:var(--font-sans);
+}
+.btn-primary{background:var(--c-accent);color:#fff;width:100%}
+.btn-primary:hover{background:var(--c-accent-dark);transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,.25)}
+.btn-primary:disabled{opacity:.55;pointer-events:none;transform:none;box-shadow:none}
+
+/* ===== SUCCESS STATE ===== */
+.form-success{
+  display:none;text-align:center;padding:24px 0;
+}
+.form-success.visible{display:block}
+.form-success .success-icon{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--c-green-bg);color:var(--c-green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;margin:0 auto 16px;
+}
+.form-success h2{font-family:var(--font-serif);font-size:1.4rem;margin-bottom:8px}
+.form-success p{font-size:0.9rem;color:var(--c-gray-500);max-width:320px;margin:0 auto 24px}
+.form-success .btn{width:auto;padding:12px 32px}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:640px){
+  .form-card{padding:32px 24px}
+  .form-card h1{font-size:1.35rem}
+}
+</style>
+</head>
+<body>
+
+<header class="form-header">
+  <div class="form-header-inner">
+    <a href="index.html" class="form-logo">Aidake<span>.</span></a>
+    <a href="index.html" class="form-back">← トップに戻る</a>
+  </div>
+</header>
+
+<section class="form-section">
+  <div class="form-card" id="formCard">
+
+    <!-- Form -->
+    <form id="subscribeForm" novalidate>
+      <h1>無料会員登録</h1>
+      <p class="form-subtitle">30秒で完了します。クレジットカードは必要ありません。</p>
+
+      <div class="form-group">
+        <label for="name">お名前<span class="required">*</span></label>
+        <input type="text" id="name" name="name" placeholder="例：山田 太郎" required autocomplete="name">
+        <span class="field-error" id="nameError">お名前を入力してください</span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">メールアドレス<span class="required">*</span></label>
+        <input type="email" id="email" name="email" placeholder="例：taro@example.com" required autocomplete="email">
+        <span class="field-error" id="emailError">有効なメールアドレスを入力してください</span>
+      </div>
+
+      <div class="form-group">
+        <label for="program">興味のあるプログラム</label>
+        <select id="program" name="program">
+          <option value="">選択してください</option>
+          <option value="basic">基礎講座</option>
+          <option value="technical">テクニカル分析</option>
+          <option value="fundamental">ファンダメンタル分析</option>
+          <option value="ai">AI分析講座</option>
+          <option value="risk">リスク管理</option>
+        </select>
+      </div>
+
+      <label class="form-check">
+        <input type="checkbox" id="agree" name="agree" required>
+        <span><a href="#">利用規約</a> および <a href="#">プライバシーポリシー</a> に同意します<span class="required">*</span></span>
+      </label>
+
+      <button type="submit" class="btn btn-primary">無料で登録する</button>
+    </form>
+
+    <!-- Success (hidden by default) -->
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">✓</div>
+      <h2>登録が完了しました</h2>
+      <p>確認メールをお送りしました。メール内のリンクから学習を開始してください。</p>
+      <a href="index.html" class="btn btn-primary">トップページに戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Config → Analytics → Form handler (order matters) -->
+<script src="js/config.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/form-handler.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---- load gtag.js dynamically from config ---- */
+  var cfg = window.AppConfig;
+  if (cfg && cfg.gtag && cfg.gtag.src && cfg.gtag.measurementId) {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = cfg.gtag.src + '?id=' + cfg.gtag.measurementId;
+    document.head.appendChild(script);
+  }
+
+  /* ---- form validation & submission ---- */
+  var form = document.getElementById('subscribeForm');
+  var success = document.getElementById('formSuccess');
+
+  function showError(fieldId, errId) {
+    document.getElementById(fieldId).classList.add('error');
+    document.getElementById(errId).classList.add('visible');
+  }
+  function clearErrors() {
+    form.querySelectorAll('.error').forEach(function (el) { el.classList.remove('error'); });
+    form.querySelectorAll('.field-error.visible').forEach(function (el) { el.classList.remove('visible'); });
+  }
+
+  if (window.FormHandler) {
+    FormHandler.handleSubmit(form, function () {
+      form.style.display = 'none';
+      success.classList.add('visible');
+    });
+  }
+
+  // Client-side validation before FormHandler takes over
+  form.addEventListener('submit', function (e) {
+    clearErrors();
+    var valid = true;
+
+    var name = document.getElementById('name');
+    if (!name.value.trim()) { showError('name', 'nameError'); valid = false; }
+
+    var email = document.getElementById('email');
+    if (!email.value.trim() || !email.checkValidity()) { showError('email', 'emailError'); valid = false; }
+
+    var agree = document.getElementById('agree');
+    if (!agree.checked) {
+      // Highlight the checkbox label
+      agree.style.outline = '2px solid var(--c-red)';
+      setTimeout(function () { agree.style.outline = ''; }, 2000);
+      valid = false;
+    }
+
+    if (!valid) { e.preventDefault(); e.stopImmediatePropagation(); }
+  }, true);
+})();
+</script>
+
+</body>
+</html>
